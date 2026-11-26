@@ -1,0 +1,233 @@
+import { AirQualitySnapshot } from "@/lib/types";
+
+export const DEMO_CITIES: Record<string, AirQualitySnapshot> = {
+  delhi: {
+    aqi: 268,
+    category: "very_unhealthy",
+    standard: "US_AQI",
+    pollutants: {
+      pm2_5: {
+        value: 182.4,
+        unit: "µg/m³",
+        label: "PM2.5",
+        safeLimit: 15.0,
+        status: "severe",
+      },
+      pm10: {
+        value: 310.2,
+        unit: "µg/m³",
+        label: "PM10",
+        safeLimit: 45.0,
+        status: "severe",
+      },
+      no2: {
+        value: 68.5,
+        unit: "µg/m³",
+        label: "Nitrogen Dioxide (NO2)",
+        safeLimit: 25.0,
+        status: "unhealthy",
+      },
+      ozone: {
+        value: 34.1,
+        unit: "µg/m³",
+        label: "Ozone (O3)",
+        safeLimit: 100.0,
+        status: "good",
+      },
+      so2: {
+        value: 18.2,
+        unit: "µg/m³",
+        label: "Sulphur Dioxide (SO2)",
+        safeLimit: 40.0,
+        status: "good",
+      },
+      co: {
+        value: 1420,
+        unit: "µg/m³",
+        label: "Carbon Monoxide (CO)",
+        safeLimit: 4000,
+        status: "good",
+      },
+    },
+    weather: {
+      temperature: 14.2,
+      humidity: 82,
+      windSpeed: 4.5,
+      windDirection: 310,
+      weatherCode: 71,
+      conditionText: "Dense Winter Smog / Haze",
+      isTemperatureInversionLikely: true,
+    },
+    hourly: Array.from({ length: 24 }).map((_, i) => {
+      const hour = String(i).padStart(2, "0") + ":00";
+      // Peak morning & night smog curve typical of winter stagnation
+      const factor = i >= 6 && i <= 10 ? 1.25 : i >= 13 && i <= 16 ? 0.8 : 1.1;
+      const hourAqi = Math.round(240 * factor);
+      return {
+        time: hour,
+        aqi: hourAqi,
+        pm2_5: Math.round(160 * factor),
+        pm10: Math.round(270 * factor),
+        no2: Math.round(60 * factor),
+        ozone: Math.round(30 + (i >= 12 && i <= 16 ? 25 : 0)),
+        temperature: Math.round((12 + (i >= 12 && i <= 15 ? 7 : 0)) * 10) / 10,
+      };
+    }),
+    location: {
+      name: "New Delhi",
+      country: "India",
+      admin1: "Delhi",
+      latitude: 28.61,
+      longitude: 77.21,
+    },
+    dataSource: "demo",
+    updatedAt: new Date().toISOString(),
+    isWinterSmogActive: true,
+  },
+  london: {
+    aqi: 42,
+    category: "good",
+    standard: "US_AQI",
+    pollutants: {
+      pm2_5: {
+        value: 9.8,
+        unit: "µg/m³",
+        label: "PM2.5",
+        safeLimit: 15.0,
+        status: "good",
+      },
+      pm10: {
+        value: 16.4,
+        unit: "µg/m³",
+        label: "PM10",
+        safeLimit: 45.0,
+        status: "good",
+      },
+      no2: {
+        value: 22.0,
+        unit: "µg/m³",
+        label: "NO2",
+        safeLimit: 25.0,
+        status: "good",
+      },
+      ozone: {
+        value: 48.0,
+        unit: "µg/m³",
+        label: "O3",
+        safeLimit: 100.0,
+        status: "good",
+      },
+    },
+    weather: {
+      temperature: 9.5,
+      humidity: 78,
+      windSpeed: 18.2,
+      weatherCode: 3,
+      conditionText: "Overcast with brisk breeze",
+      isTemperatureInversionLikely: false,
+    },
+    hourly: Array.from({ length: 24 }).map((_, i) => ({
+      time: String(i).padStart(2, "0") + ":00",
+      aqi: Math.round(35 + (i % 6) * 3),
+      pm2_5: 9.0 + (i % 4),
+      pm10: 15.0 + (i % 5),
+      temperature: 8 + (i >= 11 && i <= 15 ? 3 : 0),
+    })),
+    location: {
+      name: "London",
+      country: "United Kingdom",
+      latitude: 51.51,
+      longitude: -0.13,
+    },
+    dataSource: "demo",
+    updatedAt: new Date().toISOString(),
+    isWinterSmogActive: false,
+  },
+  newyork: {
+    aqi: 68,
+    category: "moderate",
+    standard: "US_AQI",
+    pollutants: {
+      pm2_5: {
+        value: 19.5,
+        unit: "µg/m³",
+        label: "PM2.5",
+        safeLimit: 15.0,
+        status: "moderate",
+      },
+      pm10: {
+        value: 32.1,
+        unit: "µg/m³",
+        label: "PM10",
+        safeLimit: 45.0,
+        status: "good",
+      },
+      no2: {
+        value: 31.0,
+        unit: "µg/m³",
+        label: "NO2",
+        safeLimit: 25.0,
+        status: "moderate",
+      },
+      ozone: {
+        value: 52.0,
+        unit: "µg/m³",
+        label: "Ozone",
+        safeLimit: 100.0,
+        status: "good",
+      },
+    },
+    weather: {
+      temperature: 5.2,
+      humidity: 60,
+      windSpeed: 15.4,
+      weatherCode: 1,
+      conditionText: "Partly Cloudy",
+      isTemperatureInversionLikely: false,
+    },
+    hourly: Array.from({ length: 24 }).map((_, i) => ({
+      time: String(i).padStart(2, "0") + ":00",
+      aqi: Math.round(55 + (i >= 7 && i <= 10 ? 20 : 5)),
+      pm2_5: 18 + (i % 5),
+      pm10: 30 + (i % 6),
+      temperature: 4 + (i >= 12 && i <= 16 ? 4 : 0),
+    })),
+    location: {
+      name: "New York",
+      country: "United States",
+      latitude: 40.71,
+      longitude: -74.01,
+    },
+    dataSource: "demo",
+    updatedAt: new Date().toISOString(),
+    isWinterSmogActive: false,
+  },
+};
+
+export function getFallbackDemoData(
+  locationName: string = "New Delhi",
+  lat: number = 28.61,
+  lon: number = 77.21
+): AirQualitySnapshot {
+  const normalized = locationName.toLowerCase();
+  let base: AirQualitySnapshot;
+
+  if (normalized.includes("london")) {
+    base = DEMO_CITIES.london!;
+  } else if (normalized.includes("new york") || normalized.includes("nyc")) {
+    base = DEMO_CITIES.newyork!;
+  } else {
+    base = DEMO_CITIES.delhi!;
+  }
+
+  return {
+    ...base,
+    location: {
+      name: locationName,
+      latitude: lat,
+      longitude: lon,
+    },
+    dataSource: "demo",
+    updatedAt: new Date().toISOString(),
+  };
+}
