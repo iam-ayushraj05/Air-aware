@@ -51,17 +51,17 @@ export function Footer() {
           <div>
             <span className="font-semibold text-slate-200 block mb-3">Data Sources & Standards</span>
             <p className="text-slate-400 leading-relaxed">
-              Real-time atmospheric modeling powered by <a href="https://open-meteo.com" target="_blank" rel="noreferrer" className="text-emerald-400 underline">Open-Meteo</a>. AQI calculations calibrated against US EPA 2024 PM NAAQS standards and European EEA indexes.
+              Real-time atmospheric modeling powered by <a href="https://open-meteo.com" target="_blank" rel="noreferrer" className="text-emerald-400 underline">Open-Meteo</a>. AQI calculations calibrated against US AQI via Open-Meteo and European EEA indexes.
             </p>
           </div>
         </div>
 
-        <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-slate-500 gap-4">
+        <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-slate-300 gap-4">
           <span>&copy; {new Date().getFullYear()} AirAware. Built for Clean Urban Living.</span>
           <div className="flex gap-4">
-            <Link href="/settings" className="hover:text-emerald-400">Accessibility & Privacy</Link>
+            <Link href="/settings" className="text-slate-300 hover:text-emerald-400">Accessibility & Privacy</Link>
             <span>•</span>
-            <Link href="/explorer" className="hover:text-emerald-400">Methodology</Link>
+            <Link href="/explorer" className="text-slate-300 hover:text-emerald-400">Methodology</Link>
           </div>
         </div>
       </div>

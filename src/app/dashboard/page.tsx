@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { LocationModal } from "@/components/layout/LocationModal";
@@ -29,22 +30,14 @@ import {
   ShieldAlert,
 } from "lucide-react";
 
-export default function DashboardPage() {
+function DashboardContent() {
+  const searchParams = useSearchParams();
   const [profile, setProfile] = useState<UserLifestyleProfile | null>(null);
   const [preferences, setPreferences] = useState<UserPreferences | null>(null);
   const [airData, setAirData] = useState<AirQualitySnapshot | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
-
-  // Load profile and preferences on mount
-  useEffect(() => {
-    const prof = loadUserProfile();
-    const prefs = loadUserPreferences();
-    setProfile(prof);
-    setPreferences(prefs);
-    fetchAirQuality(prof.latitude, prof.longitude, prof.locationName, prefs.aqiStandard);
-  }, []);
 
   const fetchAirQuality = async (
     lat: number,
@@ -72,6 +65,36 @@ export default function DashboardPage() {
       setIsRefreshing(false);
     }
   };
+
+  // Load profile and preferences on mount or when searchParams change
+  useEffect(() => {
+    const prof = loadUserProfile();
+    const prefs = loadUserPreferences();
+    setPreferences(prefs);
+
+    const cityParam = searchParams.get("city");
+    const latParam = searchParams.get("lat");
+    const lonParam = searchParams.get("lon");
+
+    if (cityParam && latParam && lonParam) {
+      const parsedLat = parseFloat(latParam);
+      const parsedLon = parseFloat(lonParam);
+      if (!isNaN(parsedLat) && !isNaN(parsedLon)) {
+        const updatedProf: UserLifestyleProfile = {
+          ...prof,
+          locationName: cityParam,
+          latitude: parsedLat,
+          longitude: parsedLon,
+        };
+        setProfile(updatedProf);
+        fetchAirQuality(parsedLat, parsedLon, cityParam, prefs.aqiStandard);
+        return;
+      }
+    }
+
+    setProfile(prof);
+    fetchAirQuality(prof.latitude, prof.longitude, prof.locationName, prefs.aqiStandard);
+  }, [searchParams]);
 
   const handleSelectLocation = (loc: LocationInfo) => {
     if (!profile) return;
@@ -125,13 +148,13 @@ export default function DashboardPage() {
                 {formattedDate} &bull; Urban Environmental Intelligence
               </span>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-                Good morning, {profile?.locationName ?? "City"} Resident
+                Good day, {profile?.locationName ?? snapshot.location.name} Resident
               </h1>
             </div>
 
-            <Link href="/advisor">
+            <Link href="/advisor" aria-label="Open AirAware AI assistant">
               <Button size="sm" className="gap-1.5 self-start sm:self-auto bg-emerald-700 hover:bg-emerald-800">
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4" aria-hidden="true" />
                 <span>Ask AirAware AI</span>
               </Button>
             </Link>
@@ -178,9 +201,13 @@ export default function DashboardPage() {
                 </p>
               </div>
 
-              <Link href="/planner" className="text-xs font-semibold text-emerald-700 hover:underline flex items-center gap-1">
+              <Link
+                href="/planner"
+                className="text-xs font-semibold text-emerald-700 hover:underline flex items-center gap-1"
+                aria-label="View Full Day Schedule in Smart Routine Planner"
+              >
                 <span>View Full Day Schedule</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
               </Link>
             </div>
 
@@ -198,7 +225,7 @@ export default function DashboardPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Home className="w-4 h-4 text-emerald-600" />
+                    <Home className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                     <span>Indoor Clean-Air Status</span>
                   </h3>
                   <span className="text-xs px-2 py-0.5 rounded font-bold uppercase bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
@@ -219,7 +246,7 @@ export default function DashboardPage() {
                 )}
               </div>
 
-              <Link href="/indoor-lab" className="block pt-2">
+              <Link href="/indoor-lab" className="block pt-2" aria-label="Run full room assessment in Indoor Lab">
                 <Button variant="outline" size="sm" className="w-full text-xs">
                   Run Full Room Assessment
                 </Button>
@@ -237,7 +264,7 @@ export default function DashboardPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                  <Award className="w-4 h-4" />
+                  <Award className="w-4 h-4" aria-hidden="true" />
                   <span>Your Clean-Air Contribution</span>
                 </div>
                 <h3 className="text-lg font-bold">
@@ -248,7 +275,7 @@ export default function DashboardPage() {
                 </p>
               </div>
 
-              <Link href="/impact" className="self-start sm:self-auto shrink-0">
+              <Link href="/impact" className="self-start sm:self-auto shrink-0" aria-label="View personal Environmental Impact Tracker">
                 <Button size="sm" className="bg-emerald-600 hover:bg-emerald-500 text-xs">
                   View Impact Tracker
                 </Button>
@@ -264,5 +291,19 @@ export default function DashboardPage() {
         onSelectLocation={handleSelectLocation}
       />
     </>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 flex items-center justify-center">
+          <LoadingSkeleton className="h-64 w-full max-w-3xl" />
+        </div>
+      }
+    >
+      <DashboardContent />
+    </Suspense>
   );
 }

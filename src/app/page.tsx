@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { LandingCityHotspots } from "@/features/air-quality/LandingCityHotspots";
+import { HeroExposureCard } from "@/features/air-quality/HeroExposureCard";
 import {
   Sparkles,
   ArrowRight,
@@ -39,14 +41,14 @@ export default function LandingPage() {
 
                 {/* Primary Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <Link href="/dashboard">
+                  <Link href="/dashboard" aria-label="Check my air quality on dashboard">
                     <Button size="lg" className="w-full sm:w-auto shadow-md gap-2">
                       <span>Check My Air Quality</span>
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Button>
                   </Link>
 
-                  <Link href="/advisor">
+                  <Link href="/advisor" aria-label="Explore AI Assistant conversational tool">
                     <Button variant="outline" size="lg" className="w-full sm:w-auto gap-2 border-emerald-600 text-emerald-800 bg-white hover:bg-emerald-50">
                       <Sparkles className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                       <span>Explore AI Assistant</span>
@@ -57,15 +59,15 @@ export default function LandingPage() {
                 {/* Trust Badges */}
                 <div className="flex flex-wrap items-center gap-6 pt-4 text-xs text-slate-500">
                   <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                     <span>Open-Meteo Real-Time Data</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    <span>EPA 2024 PM NAAQS Calibrated</span>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                    <span>US AQI via Open-Meteo</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                     <span>No Sensitive Data Stored</span>
                   </div>
                 </div>
@@ -111,16 +113,8 @@ export default function LandingPage() {
                       </div>
                     </div>
 
-                    {/* Grounded Insight Bar */}
-                    <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700 text-xs space-y-1.5">
-                      <div className="flex items-center justify-between font-semibold text-emerald-300">
-                        <span>Personal Exposure Reduction:</span>
-                        <span>-85% PM2.5 Inhalation</span>
-                      </div>
-                      <div className="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
-                        <div className="bg-emerald-400 h-full w-[85%] rounded-full" />
-                      </div>
-                    </div>
+                    {/* Grounded Insight Bar with Assumption Range & How We Calculate */}
+                    <HeroExposureCard />
                   </div>
                 </div>
               </div>
@@ -129,13 +123,13 @@ export default function LandingPage() {
         </section>
 
         {/* Live AQI Preview Section */}
-        <section className="py-16 bg-white border-b border-slate-200/60">
+        <section className="py-16 bg-white border-b border-slate-200/60" aria-labelledby="hotspots-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
                 Real-Time Urban Intelligence
               </span>
-              <h2 className="text-3xl font-bold text-slate-900">
+              <h2 id="hotspots-heading" className="text-3xl font-bold text-slate-900">
                 Explore Current Urban Hotspots
               </h2>
               <p className="text-slate-600 text-sm">
@@ -143,81 +137,19 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* City 1: Delhi */}
-              <Card className="hover:border-emerald-400 transition-all space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-lg text-slate-900">New Delhi</h3>
-                    <span className="text-xs text-slate-500">Winter Stagnation Season</span>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-900 border border-purple-300">
-                    AQI 268
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Very Unhealthy. Cold morning inversion layer prevents particulate dissipation. In-cabin recirculation advised.
-                </p>
-                <Link href="/dashboard" className="block pt-2">
-                  <Button variant="outline" size="sm" className="w-full text-xs">
-                    View City Dashboard
-                  </Button>
-                </Link>
-              </Card>
-
-              {/* City 2: London */}
-              <Card className="hover:border-emerald-400 transition-all space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-lg text-slate-900">London</h3>
-                    <span className="text-xs text-slate-500">Maritime Atlantic Flow</span>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                    AQI 42
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Good Air Quality. Brisk 18 km/h winds maintain low ground-level particulate accumulation. Safe for outdoor cardio.
-                </p>
-                <Link href="/dashboard" className="block pt-2">
-                  <Button variant="outline" size="sm" className="w-full text-xs">
-                    View City Dashboard
-                  </Button>
-                </Link>
-              </Card>
-
-              {/* City 3: New York */}
-              <Card className="hover:border-emerald-400 transition-all space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-bold text-lg text-slate-900">New York</h3>
-                    <span className="text-xs text-slate-500">Urban Corridor</span>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
-                    AQI 68
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Moderate. Traffic NO2 elevates during rush hour. Sensitive individuals should plan midday park visits.
-                </p>
-                <Link href="/dashboard" className="block pt-2">
-                  <Button variant="outline" size="sm" className="w-full text-xs">
-                    View City Dashboard
-                  </Button>
-                </Link>
-              </Card>
-            </div>
+            {/* Dynamic Live Hotspots Grid */}
+            <LandingCityHotspots />
           </div>
         </section>
 
         {/* How AirAware Works */}
-        <section className="py-20 bg-slate-50 border-b border-slate-200/60">
+        <section className="py-20 bg-slate-50 border-b border-slate-200/60" aria-labelledby="methodology-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
                 Step-by-Step Methodology
               </span>
-              <h2 className="text-3xl font-bold text-slate-900">
+              <h2 id="methodology-heading" className="text-3xl font-bold text-slate-900">
                 How AirAware Empowers Your Daily Decisions
               </h2>
             </div>
@@ -267,13 +199,13 @@ export default function LandingPage() {
         </section>
 
         {/* Features Showcase */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white" aria-labelledby="features-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">
                 Full-Featured Ecosystem
               </span>
-              <h2 className="text-3xl font-bold text-slate-900">
+              <h2 id="features-heading" className="text-3xl font-bold text-slate-900">
                 Engineered for Families, Commuters & Communities
               </h2>
             </div>
@@ -281,43 +213,55 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="space-y-3">
                 <div className="p-3 rounded-xl bg-emerald-50 text-emerald-700 w-fit">
-                  <Home className="w-6 h-6" />
+                  <Home className="w-6 h-6" aria-hidden="true" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">Indoor Air Quality Lab</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Room-by-room risk scoring, True HEPA filter sizing guidelines, ducted kitchen exhaust advice, and honest facts about houseplants.
                 </p>
-                <Link href="/indoor-lab" className="text-xs font-semibold text-emerald-700 hover:underline inline-flex items-center gap-1">
+                <Link
+                  href="/indoor-lab"
+                  className="text-xs font-semibold text-emerald-700 hover:underline inline-flex items-center gap-1"
+                  aria-label="Open Indoor Air Quality Lab"
+                >
                   <span>Open Indoor Lab</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </Link>
               </Card>
 
               <Card className="space-y-3">
                 <div className="p-3 rounded-xl bg-teal-50 text-teal-700 w-fit">
-                  <Leaf className="w-6 h-6" />
+                  <Leaf className="w-6 h-6" aria-hidden="true" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">Sustainable Alternatives</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Calculated emissions savings comparing solo driving vs transit, anti-idling pledges, and induction cooking transitions.
                 </p>
-                <Link href="/alternatives" className="text-xs font-semibold text-teal-700 hover:underline inline-flex items-center gap-1">
+                <Link
+                  href="/alternatives"
+                  className="text-xs font-semibold text-teal-700 hover:underline inline-flex items-center gap-1"
+                  aria-label="Explore Sustainable Alternatives"
+                >
                   <span>Explore Alternatives</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </Link>
               </Card>
 
               <Card className="space-y-3">
                 <div className="p-3 rounded-xl bg-blue-50 text-blue-700 w-fit">
-                  <HeartHandshake className="w-6 h-6" />
+                  <HeartHandshake className="w-6 h-6" aria-hidden="true" />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">Family Protection Checklist</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Tailored safeguards for young children with developing respiratory tracts and elderly family members with cardiopulmonary vulnerabilities.
                 </p>
-                <Link href="/dashboard" className="text-xs font-semibold text-blue-700 hover:underline inline-flex items-center gap-1">
+                <Link
+                  href="/dashboard"
+                  className="text-xs font-semibold text-blue-700 hover:underline inline-flex items-center gap-1"
+                  aria-label="View Family Protection Checklist on Dashboard"
+                >
                   <span>View Checklist</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </Link>
               </Card>
             </div>

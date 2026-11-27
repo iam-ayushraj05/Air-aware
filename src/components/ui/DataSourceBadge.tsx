@@ -27,7 +27,7 @@ export function DataSourceBadge({ origin, updatedAt, className }: DataSourceBadg
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
         <Activity className="w-3.5 h-3.5" aria-hidden="true" />
         <span>LIVE DATA</span>
-        {formattedTime && <span className="text-emerald-600 font-normal">({formattedTime})</span>}
+        {formattedTime && <span className="text-emerald-950 dark:text-emerald-200 font-medium">({formattedTime})</span>}
       </div>
     );
   }
@@ -36,7 +36,7 @@ export function DataSourceBadge({ origin, updatedAt, className }: DataSourceBadg
     return (
       <div
         className={clsx(
-          "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-800 border border-blue-200 dark:bg-blue-950 dark:text-blue-300",
+          "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-900 border border-blue-200 dark:bg-blue-950 dark:text-blue-300",
           className
         )}
         title="Cached air quality data from recent request"
@@ -44,7 +44,7 @@ export function DataSourceBadge({ origin, updatedAt, className }: DataSourceBadg
       >
         <Database className="w-3.5 h-3.5" aria-hidden="true" />
         <span>CACHED DATA</span>
-        {formattedTime && <span className="text-blue-600 font-normal">({formattedTime})</span>}
+        {formattedTime && <span className="text-blue-950 dark:text-blue-200 font-medium">({formattedTime})</span>}
       </div>
     );
   }
