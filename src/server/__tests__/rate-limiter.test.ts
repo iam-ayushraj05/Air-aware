@@ -41,4 +41,23 @@ describe("Sliding Window Rate Limiter", () => {
 
     nowSpy.mockRestore();
   });
+
+  it("deletes empty record keys during purgeOldEntries cleanup", () => {
+    const expiredKey = "test_ip_expired";
+    checkRateLimit(expiredKey, 5, 500);
+
+    // Spy forward past 5 mins cleanup interval
+    const nowSpy = vi.spyOn(Date, "now");
+    const futureTime = Date.now() + 10 * 60 * 1000;
+    nowSpy.mockReturnValue(futureTime);
+
+    // Trigger cleanup with another key
+    checkRateLimit("trigger_key", 5, 500);
+
+    // Now expiredKey is completely wiped from map
+    const recheck = checkRateLimit(expiredKey, 5, 500);
+    expect(recheck.remaining).toBe(4);
+
+    nowSpy.mockRestore();
+  });
 });

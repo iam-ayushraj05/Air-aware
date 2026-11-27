@@ -2,6 +2,7 @@ import { IndoorScoreResult } from "@/lib/indoor";
 import { Card } from "@/components/ui/Card";
 import { AlertCircle } from "lucide-react";
 import { clsx } from "clsx";
+import { ScoreBreakdownBars } from "./ScoreBreakdownBars";
 
 interface AssessmentScoreCardProps {
   result: IndoorScoreResult;
@@ -45,74 +46,24 @@ export function AssessmentScoreCard({ result, outdoorAqi }: AssessmentScoreCardP
           <p className="text-xs text-slate-500 mt-2">Outdoor AQI Baseline: {outdoorAqi}</p>
         </div>
 
-        <div className="space-y-2 text-xs">
-          <div>
-            <div className="flex justify-between text-slate-600 dark:text-slate-400 mb-0.5">
-              <span>Source Reduction</span>
-              <span className="font-semibold">{result.breakdown.sourceReductionScore} / 30</span>
-            </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-              <div
-                className="bg-emerald-500 h-full rounded-full"
-                style={{ width: `${(result.breakdown.sourceReductionScore / 30) * 100}%` }}
-              />
-            </div>
-          </div>
+        <ScoreBreakdownBars breakdown={result.breakdown} />
 
-          <div>
-            <div className="flex justify-between text-slate-600 dark:text-slate-400 mb-0.5">
-              <span>Active Filtration</span>
-              <span className="font-semibold">{result.breakdown.filtrationScore} / 30</span>
-            </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-              <div
-                className="bg-teal-500 h-full rounded-full"
-                style={{ width: `${(result.breakdown.filtrationScore / 30) * 100}%` }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex justify-between text-slate-600 dark:text-slate-400 mb-0.5">
-              <span>Ventilation Strategy</span>
-              <span className="font-semibold">{result.breakdown.ventilationScore} / 25</span>
-            </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-              <div
-                className="bg-blue-500 h-full rounded-full"
-                style={{ width: `${(result.breakdown.ventilationScore / 25) * 100}%` }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex justify-between text-slate-600 dark:text-slate-400 mb-0.5">
-              <span>Cleaning & Dust Control</span>
-              <span className="font-semibold">{result.breakdown.cleaningScore} / 15</span>
-            </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-              <div
-                className="bg-amber-500 h-full rounded-full"
-                style={{ width: `${(result.breakdown.cleaningScore / 15) * 100}%` }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {result.priorityActions.length > 0 && (
-          <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 rounded-xl space-y-1.5 text-xs">
-            <strong className="block text-amber-900 dark:text-amber-200 font-semibold flex items-center gap-1.5">
-              <AlertCircle className="w-4 h-4 text-amber-600" aria-hidden="true" />
-              Top Priority Improvement:
-            </strong>
-            <p className="text-amber-800 dark:text-amber-300 leading-relaxed">
-              {result.priorityActions[0]}
-            </p>
+        {result.keyRisks.length > 0 && (
+          <div className="p-3 bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-xl space-y-1">
+            <span className="text-xs font-bold text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
+              <AlertCircle className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Key Risk Factors</span>
+            </span>
+            <ul className="text-[11px] text-amber-700 dark:text-amber-400 space-y-0.5 list-disc pl-4">
+              {result.keyRisks.map((risk, i) => (
+                <li key={i}>{risk}</li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
 
-      <p className="text-[10px] text-slate-400 leading-tight italic pt-2 border-t border-slate-100 dark:border-slate-800">
+      <p className="text-[11px] text-slate-400 dark:text-slate-500 italic border-t border-slate-100 dark:border-slate-800 pt-3">
         {result.heuristicDisclaimer}
       </p>
     </Card>

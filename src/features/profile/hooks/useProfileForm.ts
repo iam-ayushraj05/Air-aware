@@ -5,7 +5,7 @@ import { saveUserProfile, saveUserPreferences, clearAllSavedData } from "@/lib/s
 interface UseProfileFormOptions {
   initialProfile: UserLifestyleProfile;
   initialPreferences: UserPreferences;
-  onSaved?: () => void;
+  onSaved?: (() => void) | undefined;
 }
 
 /**

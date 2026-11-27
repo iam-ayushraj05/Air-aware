@@ -122,6 +122,8 @@ export function calculatePersonalImpact(actions: TrackedActionItem[]): PersonalI
   };
 }
 
+export type PersonalImpactSummary = ReturnType<typeof calculatePersonalImpact>;
+
 /**
  * Demo community challenge metrics (Clearly labeled DEMO DATA).
  */

@@ -2,9 +2,9 @@ import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { clsx } from "clsx";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "danger" | "ghost";
-  size?: "sm" | "md" | "lg";
-  isLoading?: boolean;
+  variant?: "primary" | "secondary" | "outline" | "danger" | "ghost" | undefined;
+  size?: "sm" | "md" | "lg" | undefined;
+  isLoading?: boolean | undefined;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(

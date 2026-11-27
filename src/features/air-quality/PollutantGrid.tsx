@@ -1,17 +1,10 @@
-import { PollutantDetail } from "@/lib/types";
+import { AirQualitySnapshot } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { clsx } from "clsx";
 
 interface PollutantGridProps {
-  pollutants: {
-    pm2_5: PollutantDetail;
-    pm10: PollutantDetail;
-    no2?: PollutantDetail;
-    ozone?: PollutantDetail;
-    so2?: PollutantDetail;
-    co?: PollutantDetail;
-  };
+  pollutants: AirQualitySnapshot["pollutants"];
 }
 
 export function PollutantGrid({ pollutants }: PollutantGridProps) {

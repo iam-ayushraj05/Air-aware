@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   saveUserProfile,
   loadUserProfile,
@@ -76,5 +76,23 @@ describe("Storage & Zod Schema Validation", () => {
     expect(localStorage.getItem("airaware_user_profile_v1")).toBeNull();
     expect(localStorage.getItem("airaware_preferences_v1")).toBeNull();
     expect(localStorage.getItem("airaware_tracked_actions_v1")).toBeNull();
+  });
+
+  it("handles storage exceptions gracefully when localStorage throws", () => {
+    const getItemSpy = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("QuotaExceeded or SecurityError");
+    });
+    const setItemSpy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("QuotaExceeded or SecurityError");
+    });
+
+    // Should return default fallback without throwing
+    const loaded = loadUserProfile();
+    expect(loaded).toEqual(DEFAULT_PROFILE);
+
+    expect(() => saveUserProfile(DEFAULT_PROFILE)).not.toThrow();
+
+    getItemSpy.mockRestore();
+    setItemSpy.mockRestore();
   });
 });

@@ -20,7 +20,7 @@ export interface PollutantDetail {
   value: number;
   unit: string;
   label: string;
-  epaBreakpointIndex?: number;
+  epaBreakpointIndex?: number | undefined;
   safeLimit: number;
   status: "good" | "moderate" | "unhealthy" | "severe";
 }
@@ -29,10 +29,10 @@ export interface WeatherCondition {
   temperature: number; // Celsius
   humidity: number; // %
   windSpeed: number; // km/h
-  windDirection?: number; // degrees
+  windDirection?: number | undefined; // degrees
   weatherCode: number;
   conditionText: string;
-  isTemperatureInversionLikely?: boolean;
+  isTemperatureInversionLikely?: boolean | undefined;
 }
 
 export interface HourlyForecastItem {
@@ -40,15 +40,15 @@ export interface HourlyForecastItem {
   aqi: number;
   pm2_5: number;
   pm10: number;
-  no2?: number;
-  ozone?: number;
-  temperature?: number;
+  no2?: number | undefined;
+  ozone?: number | undefined;
+  temperature?: number | undefined;
 }
 
 export interface LocationInfo {
   name: string;
-  country?: string;
-  admin1?: string;
+  country?: string | undefined;
+  admin1?: string | undefined;
   latitude: number;
   longitude: number;
 }
@@ -62,10 +62,10 @@ export interface AirQualitySnapshot {
   pollutants: {
     pm2_5: PollutantDetail;
     pm10: PollutantDetail;
-    no2?: PollutantDetail;
-    ozone?: PollutantDetail;
-    so2?: PollutantDetail;
-    co?: PollutantDetail;
+    no2?: PollutantDetail | undefined;
+    ozone?: PollutantDetail | undefined;
+    so2?: PollutantDetail | undefined;
+    co?: PollutantDetail | undefined;
   };
   weather: WeatherCondition;
   hourly: HourlyForecastItem[];
@@ -100,8 +100,8 @@ export interface StructuredRecommendation {
   expectedBenefit: string;
   confidence: number;
   isGeneral: boolean;
-  timeOfDay?: "morning" | "afternoon" | "evening" | "night";
-  completed?: boolean;
+  timeOfDay?: ("morning" | "afternoon" | "evening" | "night") | undefined;
+  completed?: boolean | undefined;
 }
 
 export interface DailyRoutinePlan {

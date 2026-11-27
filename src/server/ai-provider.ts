@@ -208,9 +208,9 @@ async function callOpenAiApi(
  * @returns AiAdvisorResponse promise
  */
 export async function getAiAdvisorResponse(params: {
-  userQuestion?: string;
+  userQuestion?: string | undefined;
   airQuality: AirQualitySnapshot;
-  profile?: Partial<UserLifestyleProfile>;
+  profile?: Partial<UserLifestyleProfile> | undefined;
 }): Promise<AiAdvisorResponse> {
   const { userQuestion = "", airQuality, profile = {} } = params;
   const env = getServerEnv();

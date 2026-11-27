@@ -24,6 +24,14 @@ describe("result library", () => {
 
     const failResult = tryCatch(() => JSON.parse("invalid-json{"));
     expect(failResult.success).toBe(false);
+
+    const nonErrorFail = tryCatch(() => {
+      throw "Raw string error";
+    });
+    expect(nonErrorFail.success).toBe(false);
+    if (!nonErrorFail.success) {
+      expect(nonErrorFail.error.message).toBe("Raw string error");
+    }
   });
 
   it("safely catches asynchronous rejections with tryCatchAsync()", async () => {
@@ -32,5 +40,11 @@ describe("result library", () => {
 
     const failResult = await tryCatchAsync(Promise.reject(new Error("Async fail")));
     expect(failResult.success).toBe(false);
+
+    const nonErrorAsyncFail = await tryCatchAsync(Promise.reject("Non-error rejection"));
+    expect(nonErrorAsyncFail.success).toBe(false);
+    if (!nonErrorAsyncFail.success) {
+      expect(nonErrorAsyncFail.error.message).toBe("Non-error rejection");
+    }
   });
 });

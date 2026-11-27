@@ -8,6 +8,7 @@ import {
 } from "@/lib/types";
 import { loadUserProfile, loadUserPreferences } from "@/lib/storage";
 import { getFallbackDemoData } from "@/server/demo-data";
+import { parseDashboardLocationParams } from "../lib/dashboardLocationParams";
 
 /**
  * Custom hook encapsulating dashboard state, Open-Meteo fetching, URL query synchronization,
@@ -36,14 +37,7 @@ export function useDashboardData() {
         );
         if (!res.ok) throw new Error("API call failed");
         const json = await res.json();
-        if (json.data) {
-          setAirData({
-            ...json.data,
-            standard,
-          });
-        } else {
-          setAirData(getFallbackDemoData(name, lat, lon));
-        }
+        setAirData(json.data ? { ...json.data, standard } : getFallbackDemoData(name, lat, lon));
       } catch {
         setAirData(getFallbackDemoData(name, lat, lon));
       } finally {
@@ -59,40 +53,30 @@ export function useDashboardData() {
     const prefs = loadUserPreferences();
     setPreferences(prefs);
 
-    const cityParam = searchParams.get("city");
-    const latParam = searchParams.get("lat");
-    const lonParam = searchParams.get("lon");
-
-    if (cityParam && latParam && lonParam) {
-      const parsedLat = parseFloat(latParam);
-      const parsedLon = parseFloat(lonParam);
-      if (!isNaN(parsedLat) && !isNaN(parsedLon)) {
-        const updatedProf: UserLifestyleProfile = {
-          ...prof,
-          locationName: cityParam,
-          latitude: parsedLat,
-          longitude: parsedLon,
-        };
-        setProfile(updatedProf);
-        fetchAirQuality(parsedLat, parsedLon, cityParam, prefs.aqiStandard);
-        return;
-      }
-    }
-
-    setProfile(prof);
-    fetchAirQuality(prof.latitude, prof.longitude, prof.locationName, prefs.aqiStandard);
+    const parsed = parseDashboardLocationParams(searchParams, prof);
+    const updatedProf: UserLifestyleProfile = {
+      ...prof,
+      locationName: parsed.locationName,
+      latitude: parsed.latitude,
+      longitude: parsed.longitude,
+    };
+    setProfile(updatedProf);
+    fetchAirQuality(parsed.latitude, parsed.longitude, parsed.locationName, prefs.aqiStandard);
   }, [searchParams, fetchAirQuality]);
 
   const handleSelectLocation = useCallback(
     (loc: LocationInfo) => {
       if (!profile) return;
-      const updated = {
-        ...profile,
-        locationName: loc.name,
-        latitude: loc.latitude,
-        longitude: loc.longitude,
-      };
-      setProfile(updated);
+      setProfile((prev) =>
+        prev
+          ? {
+              ...prev,
+              locationName: loc.name,
+              latitude: loc.latitude,
+              longitude: loc.longitude,
+            }
+          : prev
+      );
       fetchAirQuality(loc.latitude, loc.longitude, loc.name, preferences?.aqiStandard ?? "US_AQI");
     },
     [profile, preferences, fetchAirQuality]

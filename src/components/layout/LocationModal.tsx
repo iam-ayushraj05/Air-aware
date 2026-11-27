@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { LocationInfo } from "@/lib/types";
 import { useLocationSearch } from "./hooks/useLocationSearch";
 import { PopularCitiesGrid } from "./components/PopularCitiesGrid";
+import { LocationSearchResultsList } from "./components/LocationSearchResultsList";
 
 interface LocationModalProps {
   isOpen: boolean;
@@ -94,32 +95,11 @@ export function LocationModal({ isOpen, onClose, onSelectLocation }: LocationMod
           </p>
         )}
 
-        {searchResults.length > 0 && (
-          <div className="space-y-1">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
-              Search Results
-            </span>
-            <div className="max-h-44 overflow-y-auto space-y-1">
-              {searchResults.map((loc, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => {
-                    onSelectLocation(loc);
-                    onClose();
-                  }}
-                  className="w-full text-left p-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-800 dark:text-slate-200 flex items-center justify-between transition-colors"
-                >
-                  <span className="font-semibold">{loc.name}</span>
-                  <span className="text-slate-400">
-                    {loc.admin1 ? `${loc.admin1}, ` : ""}
-                    {loc.country}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        <LocationSearchResultsList
+          searchResults={searchResults}
+          onSelectLocation={onSelectLocation}
+          onClose={onClose}
+        />
 
         <PopularCitiesGrid
           onSelectCity={(city) => {

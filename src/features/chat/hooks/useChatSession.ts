@@ -2,10 +2,11 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { AirQualitySnapshot, UserLifestyleProfile } from "@/lib/types";
 import { AiAdvisorResponse } from "@/server/ai-provider";
 import { ChatMessage } from "../types";
+import { createInitialChatMessage, formatAiChatMessage } from "../lib/chatMessageFormatters";
 
 interface UseChatSessionOptions {
   airQuality: AirQualitySnapshot;
-  profile?: Partial<UserLifestyleProfile>;
+  profile?: Partial<UserLifestyleProfile> | undefined;
 }
 
 /**
@@ -14,13 +15,7 @@ interface UseChatSessionOptions {
  */
 export function useChatSession({ airQuality, profile }: UseChatSessionOptions) {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "initial",
-      sender: "ai",
-      text: `Hello! I am AirAware AI, your environmental wellness advisor. Today in ${airQuality.location.name}, the ambient AQI is ${airQuality.aqi} (${airQuality.category.toUpperCase()}). How can I help protect your family or optimize your routine today?`,
-      isFallback: true,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    },
+    createInitialChatMessage(airQuality.location.name, airQuality.aqi, airQuality.category),
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -54,32 +49,13 @@ export function useChatSession({ airQuality, profile }: UseChatSessionOptions) {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: textToSend,
-            airQuality,
-            profile,
-          }),
+          body: JSON.stringify({ message: textToSend, airQuality, profile }),
         });
 
-        if (!res.ok) {
-          throw new Error("Chat request failed");
-        }
-
+        if (!res.ok) throw new Error("Chat request failed");
         const json = await res.json();
         const aiData: AiAdvisorResponse = json.data;
-
-        const fullAiText = `${aiData.summary}\n\n${aiData.routineAdvice}\n\n${aiData.indoorGuidance}`;
-
-        const aiMsg: ChatMessage = {
-          id: `ai-${Date.now()}`,
-          sender: "ai",
-          text: fullAiText,
-          isFallback: aiData.isDemoFallback,
-          actionItems: aiData.actionItems,
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        };
-
-        setMessages((prev) => [...prev, aiMsg]);
+        setMessages((prev) => [...prev, formatAiChatMessage(aiData)]);
       } catch {
         const errorMsg: ChatMessage = {
           id: `err-${Date.now()}`,

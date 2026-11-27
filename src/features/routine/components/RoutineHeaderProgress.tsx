@@ -9,7 +9,7 @@ interface RoutineHeaderProgressProps {
   completedCount: number;
   totalCount: number;
   progressPercent: number;
-  isRegenerating?: boolean;
+  isRegenerating?: boolean | undefined;
   onRegenerate: () => void;
 }
 

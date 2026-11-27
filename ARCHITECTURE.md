@@ -60,49 +60,85 @@ src/
 │   └── layout/                       # Navbar, Sidebar, MobileNav, Footer, LocationModal
 │       ├── components/               # MobileNavDrawer, PopularCitiesGrid
 │       └── hooks/                    # useLocationSearch
-├── features/                         # Modular feature domains (all components < 120 lines)
-│   ├── air-quality/                  # AQICard, PollutantGrid, WeatherCard, TrendChart
-│   │   ├── components/               # CityHotspotCard, TrendDataTable, DashboardHealthGuidance
-│   │   └── hooks/                    # useDashboardData, useCityHotspots
-│   ├── chat/                         # Conversational AI assistant
+├── features/                         # Modular feature domains (all components < 120 lines, functions < 30 lines)
+│   ├── air-quality/                  # AQICard, PollutantGrid, WeatherCard, TrendChart, index.ts
+│   │   ├── components/               # CityHotspotCard, TrendDataTable, DashboardSections, DashboardHeader, OverviewGrid, etc.
+│   │   ├── hooks/                    # useDashboardData, useCityHotspots
+│   │   ├── lib/                      # dashboardLocationParams, familyChecklistData, hotspotFallbacks, hotspotTypes
+│   │   └── types.ts                  # Domain types
+│   ├── chat/                         # Conversational AI assistant, index.ts
 │   │   ├── components/               # ChatHeader, ChatMessageList, ChatPromptPills, ChatInputForm
-│   │   └── hooks/                    # useChatSession
-│   ├── community/                    # Neighborhood clean-air collective actions
-│   │   └── components/               # CommuteChallengeCard, RecentPledgesFeed, ShareCampaignCard
-│   ├── explorer/                     # Educational atmospheric science modules
-│   │   └── components/               # WinterInversionEducation, PollutantAnatomy, AqiSpectrumGuide
-│   ├── impact/                       # Personal carbon & particulate savings metrics
-│   │   └── components/               # ImpactStatCards
-│   ├── indoor/                       # Indoor Air Quality assessment & filtration hacks
-│   │   └── components/               # AssessmentControls, AssessmentScoreCard, PlantScienceCard
-│   ├── landing/                      # Landing page sections
+│   │   ├── hooks/                    # useChatSession
+│   │   ├── lib/                      # chatMessageFormatters
+│   │   └── types.ts                  # ChatMessage and message state types
+│   ├── community/                    # Neighborhood clean-air collective actions, index.ts
+│   │   ├── components/               # CommuteChallengeCard, RecentPledgesFeed, ShareCampaignCard
+│   │   ├── hooks/                    # useCommunityPledges
+│   │   ├── lib/                      # communityPledges
+│   │   └── types.ts                  # CommunityPledgeItem
+│   ├── explorer/                     # Educational atmospheric science modules, index.ts
+│   │   ├── components/               # WinterInversionEducation, PollutantAnatomy, AqiSpectrumGuide
+│   │   ├── hooks/                    # useExplorerTabs
+│   │   ├── lib/                      # inversionConstants
+│   │   └── types.ts                  # PollutantAnatomyItem
+│   ├── impact/                       # Personal carbon & particulate savings metrics, index.ts
+│   │   ├── components/               # ImpactStatCards
+│   │   ├── hooks/                    # usePersonalImpactMetrics
+│   │   ├── lib/                      # impactEquivalencies
+│   │   └── types.ts                  # ImpactEquivalency
+│   ├── indoor/                       # Indoor Air Quality assessment & filtration hacks, index.ts
+│   │   ├── components/               # AssessmentControls, AssessmentScoreCard, PlantScienceCard, ScoreBreakdownBars, etc.
+│   │   ├── hooks/                    # useIndoorAssessmentForm
+│   │   ├── lib/                      # plantScienceFacts
+│   │   └── types.ts                  # IndoorFormUpdater
+│   ├── landing/                      # Landing page sections, index.ts
 │   │   ├── LandingHero.tsx           # Hero section with atmospheric inversion transition
 │   │   ├── LandingMethodology.tsx    # 4-step methodology breakdown
-│   │   └── LandingFeatures.tsx       # Core ecosystem feature cards
-│   ├── profile/                      # Household profile & settings management
-│   │   ├── components/               # HouseholdSection, AccessibilitySection, AlertsSection
-│   │   └── hooks/                    # useProfileForm
-│   ├── routine/                      # 4-part diurnal schedule timeline
-│   │   └── components/               # RoutineHeaderProgress, RoutinePeriodSection
-│   ├── sustainability/               # Action comparison & calculation disclosure
-│   │   └── components/               # CalculationDisclosure, EnvironmentalSavingsBox
-│   └── winter-smog/                  # WinterSmogBanner (inversion hazard alerts)
+│   │   ├── LandingFeatures.tsx       # Core ecosystem feature cards
+│   │   ├── hooks/                    # useLandingMetrics
+│   │   ├── lib/                      # landingFeaturesData
+│   │   └── types.ts                  # LandingFeatureDefinition
+│   ├── profile/                      # Household profile & settings management, index.ts
+│   │   ├── components/               # HouseholdSection, AccessibilitySection, AlertsSection, LifestyleDropdowns, etc.
+│   │   ├── hooks/                    # useProfileForm
+│   │   ├── lib/                      # profileDefaults
+│   │   └── types.ts                  # ProfileFormState
+│   ├── routine/                      # 4-part diurnal schedule timeline, index.ts
+│   │   ├── components/               # RoutineHeaderProgress, RoutinePeriodSection
+│   │   ├── hooks/                    # useRoutineChecklist
+│   │   ├── lib/                      # routineIntervals
+│   │   └── types.ts                  # RoutinePeriod, RoutinePeriodHeader
+│   ├── sustainability/               # Action comparison & calculation disclosure, index.ts
+│   │   ├── components/               # CalculationDisclosure, EnvironmentalSavingsBox
+│   │   ├── hooks/                    # useSustainabilityActions
+│   │   ├── lib/                      # sustainabilityStandards
+│   │   └── types.ts                  # SustainabilityCategoryFilter
+│   └── winter-smog/                  # WinterSmogBanner (inversion hazard alerts), index.ts
+│       ├── components/               # SmogActionCards
+│       ├── hooks/                    # useWinterSmogStatus
+│       ├── lib/                      # winterSmogPhysics
+│       └── types.ts                  # WinterSmogParams
 ├── lib/                              # Pure domain logic (100% testable, zero side effects)
 │   ├── aqi.ts                        # Monotonic EPA sub-index & stagnation detection
 │   ├── constants.ts                  # Documented breakpoints, EPA factors, host allowlists
 │   ├── formatters.ts                 # Time, date, percentage, and metric string formatters
 │   ├── indoor.ts                     # Heuristic indoor score weighting algorithm
 │   ├── logger.ts                     # Environment-aware structured logging
+│   ├── recommendation-helpers.ts     # Demographic & commute recommendation builders
 │   ├── recommendations.ts            # Evidence-grounded recommendation engine
 │   ├── result.ts                     # Result<T, E> type-safe functional error handling
+│   ├── routine-builders.ts           # 4-phase diurnal schedule generators
 │   ├── storage.ts                    # Versioned, Zod-validated LocalStorage persistence
 │   ├── sustainability.ts             # Avoided emission mathematical formulas
 │   └── types.ts                      # Strict TypeScript interface declarations
-└── server/                           # Server-only execution layer
+└── server/                           # Server-only execution layer (SSRF-protected, zero bundle leak)
     ├── ai-provider.ts                # Prompt injection defense & LLM integration
-    ├── api-client.ts                 # Resilient Open-Meteo client with SSRF allowlist
+    ├── api-client.ts                 # Resilient Open-Meteo client with data transformation
+    ├── demo-cities.ts                # Global city datasets for simulated offline execution
     ├── demo-data.ts                  # Fully populated fallback dataset clearly marked demo
     ├── env.ts                        # Server environment validation via Zod
+    ├── http-client.ts                # Resilient fetch with SSRF allowlist & exponential backoff
+    ├── open-meteo-types.ts           # External Open-Meteo API response typings
     └── rate-limiter.ts               # In-memory sliding window rate limiter
 ```
 

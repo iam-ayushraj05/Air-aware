@@ -7,21 +7,21 @@ Status: **ALL GATES PASSING (100% Test Success, 100 Lighthouse Accessibility)**
 
 ## 1. Quality Gate Scorecard
 
-| Evaluation Gate                 | Requirement Target                                                        | Verified Result                                                                        | Status     |
-| ------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ---------- |
-| **Code Formatting (Prettier)**  | Consistent code style across all TS/TSX/CSS/JSON/MD files                 | **100% compliant** (`npm run format:check` - 0 issues)                                 | **PASSED** |
-| **TypeScript Strictness**       | Strict mode, zero `any`, zero `@ts-ignore`                                | Zero errors across all project files (`tsc --noEmit`)                                  | **PASSED** |
-| **ESLint Static Analysis**      | Next.js Core Web Vitals + TypeScript ESLint with **zero warnings**        | 0 errors, 0 warnings (`eslint src`, no-console, no-explicit-any enforced)              | **PASSED** |
-| **Production Dependency Audit** | Zero high / critical vulnerabilities (`npm audit --omit=dev`)             | **0 vulnerabilities**                                                                  | **PASSED** |
-| **Automated Unit Tests**        | Boundary-value tests, property-based tests (`fast-check`), mock testing   | **63 passed out of 63 tests across 13 test suites**                                    | **PASSED** |
-| **Test Coverage Thresholds**    | ≥ 85% lines/functions/statements, ≥ 70% branches for src/lib & src/server | **Lines: 92.85%**, **Functions: 96.34%**, **Statements: 90.28%**, **Branches: 78.16%** | **PASSED** |
-| **Component Architecture**      | Every component < 120 lines, pure functions < 30 lines, zero `any`        | **100% compliant** across all decomposed feature modules                               | **PASSED** |
-| **End-to-End Test Suite**       | Playwright E2E covering 8 core user flows + keyboard & screen reader a11y | **9 passed out of 9 tests (100%)** (`npx playwright test`)                             | **PASSED** |
-| **Lighthouse Accessibility**    | Production build audit against WCAG 2.2 AA standards                      | **100 / 100**                                                                          | **PASSED** |
-| **Lighthouse Performance**      | ≥ 95 on mobile/desktop production build                                   | **95 / 100**                                                                           | **PASSED** |
-| **Lighthouse Best Practices**   | ≥ 95 on console hygiene, HTTPS, and modern web standards                  | **96 / 100**                                                                           | **PASSED** |
-| **Lighthouse SEO**              | ≥ 95 on metadata, crawlability, and indexing                              | **100 / 100**                                                                          | **PASSED** |
-| **Production Build**            | Static generation and bundling of all 16 routes and API endpoints         | **Compiled & optimized successfully in Next.js 16 Turbopack (exit code 0)**            | **PASSED** |
+| Evaluation Gate                 | Requirement Target                                                             | Verified Result                                                                        | Status     |
+| ------------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- | ---------- |
+| **Code Formatting (Prettier)**  | Consistent code style across all TS/TSX/CSS/JSON/MD files                      | **100% compliant** (`npm run format:check` - 0 issues)                                 | **PASSED** |
+| **TypeScript Strictness**       | 7 strict flags + exactOptionalPropertyTypes, zero `any`, zero `@ts-ignore`     | Zero errors across all project files (`tsc --noEmit`)                                  | **PASSED** |
+| **ESLint Static Analysis**      | Next.js Core Web Vitals + TypeScript ESLint with **zero warnings**             | 0 errors, 0 warnings (`eslint src`, no-console, no-explicit-any enforced)              | **PASSED** |
+| **Production Dependency Audit** | Zero high / critical vulnerabilities (`npm audit --omit=dev`)                  | **0 vulnerabilities**                                                                  | **PASSED** |
+| **Automated Unit Tests**        | Boundary-value tests, property-based tests (`fast-check`), mock testing        | **80 passed out of 80 tests across 17 test suites**                                    | **PASSED** |
+| **Test Coverage Thresholds**    | ≥ 85% lines/functions/statements, ≥ 80% branches for src/lib & src/server      | **Lines: 93.75%**, **Functions: 98.78%**, **Statements: 91.09%**, **Branches: 81.10%** | **PASSED** |
+| **Component Architecture**      | Every component < 120 lines, all files <= 250 lines, pure functions < 30 lines | **100% compliant** across all 11 feature domains                                       | **PASSED** |
+| **End-to-End Test Suite**       | Playwright E2E covering 8 core user flows + keyboard & screen reader a11y      | **9 passed out of 9 tests (100%)** (`npx playwright test`)                             | **PASSED** |
+| **Lighthouse Accessibility**    | Production build audit against WCAG 2.2 AA standards                           | **100 / 100**                                                                          | **PASSED** |
+| **Lighthouse Performance**      | ≥ 95 on mobile/desktop production build                                        | **95 / 100**                                                                           | **PASSED** |
+| **Lighthouse Best Practices**   | ≥ 95 on console hygiene, HTTPS, and modern web standards                       | **96 / 100**                                                                           | **PASSED** |
+| **Lighthouse SEO**              | ≥ 95 on metadata, crawlability, and indexing                                   | **100 / 100**                                                                          | **PASSED** |
+| **Production Build**            | Static generation and bundling of all 16 routes and API endpoints              | **Compiled & optimized successfully in Next.js 16 Turbopack (exit code 0)**            | **PASSED** |
 
 ---
 
@@ -44,23 +44,27 @@ Status: **ALL GATES PASSING (100% Test Success, 100 Lighthouse Accessibility)**
 
  RUN  v5.1.2 C:/HACKATHON/AirAware
 
- ✓ src/lib/__tests__/formatters.test.ts (4 tests) 41ms
- ✓ src/lib/__tests__/indoor.test.ts (4 tests) 12ms
- ✓ src/lib/__tests__/sustainability.test.ts (2 tests) 9ms
- ✓ src/server/__tests__/rate-limiter.test.ts (3 tests) 12ms
- ✓ src/lib/__tests__/recommendations.test.ts (9 tests) 20ms
- ✓ src/server/__tests__/security.test.ts (6 tests) 23ms
- ✓ src/lib/__tests__/storage.test.ts (5 tests) 23ms
- ✓ src/lib/__tests__/aqi.test.ts (7 tests) 23ms
- ✓ src/server/__tests__/api-client.test.ts (7 tests) 2233ms
- ✓ src/lib/__tests__/result.test.ts (4 tests) 5ms
- ✓ src/server/__tests__/env.test.ts (1 test) 5ms
- ✓ src/components/__tests__/components.test.tsx (6 tests) 163ms
- ✓ src/components/__tests__/a11y.test.tsx (5 tests) 266ms
+ ✓ src/server/__tests__/http-client.test.ts (5 tests) 19ms
+ ✓ src/lib/__tests__/recommendation-helpers.test.ts (6 tests) 12ms
+ ✓ src/lib/__tests__/formatters.test.ts (4 tests) 35ms
+ ✓ src/server/__tests__/rate-limiter.test.ts (4 tests) 20ms
+ ✓ src/lib/__tests__/recommendations.test.ts (9 tests) 17ms
+ ✓ src/lib/__tests__/storage.test.ts (6 tests) 31ms
+ ✓ src/server/__tests__/security.test.ts (6 tests) 27ms
+ ✓ src/lib/__tests__/aqi.test.ts (7 tests) 28ms
+ ✓ src/server/__tests__/api-client.test.ts (7 tests) 2029ms
+ ✓ src/lib/__tests__/sustainability.test.ts (2 tests) 13ms
+ ✓ src/lib/__tests__/routine-builders.test.ts (2 tests) 11ms
+ ✓ src/lib/__tests__/result.test.ts (4 tests) 11ms
+ ✓ src/lib/__tests__/indoor.test.ts (4 tests) 13ms
+ ✓ src/lib/__tests__/logger.test.ts (2 tests) 7ms
+ ✓ src/server/__tests__/env.test.ts (1 test) 9ms
+ ✓ src/components/__tests__/components.test.tsx (6 tests) 273ms
+ ✓ src/components/__tests__/a11y.test.tsx (5 tests) 352ms
 
- Test Files  13 passed (13)
-      Tests  63 passed (63)
-   Duration  10.28s
+ Test Files  17 passed (17)
+      Tests  80 passed (80)
+   Duration  12.67s
 
 > airaware@1.0.0 build
 > next build
@@ -139,22 +143,28 @@ Audited URL: `http://127.0.0.1:3005` (Production Build)
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   90.28 |    78.16 |   96.34 |   92.85 |
- lib               |   92.85 |    81.04 |   96.07 |   94.23 |
+All files          |   91.09 |     81.1 |   98.78 |   93.75 |
+ lib               |   93.57 |    86.12 |     100 |      95 |
   aqi.ts           |      88 |    89.47 |     100 |   85.71 | 17,33,84-90
   constants.ts     |     100 |      100 |     100 |     100 |
   formatters.ts    |   85.71 |      100 |     100 |   84.61 | 20,43
   indoor.ts        |    96.1 |    91.42 |     100 |   97.29 | 110,120
-  logger.ts        |    37.5 |    21.42 |   33.33 |    37.5 | 14-16,25-34
-  recommendations  |     100 |    83.54 |     100 |     100 | 45,240,285-446
-  result.ts        |     100 |       50 |     100 |     100 | 38-54
+  logger.ts        |    62.5 |    35.71 |     100 |    62.5 | 16,25,34
+  ...on-helpers.ts |     100 |      100 |     100 |     100 |
+  ...mendations.ts |     100 |    93.02 |     100 |     100 | 48,172,191
+  result.ts        |     100 |      100 |     100 |     100 |
+  ...e-builders.ts |     100 |    86.36 |     100 |     100 | 167-176
   storage.ts       |    90.9 |    58.33 |     100 |     100 | 102-108,117-201
-  sustainability   |     100 |      100 |     100 |     100 |
- server            |   86.91 |       75 |   96.77 |   90.95 |
+  ...ainability.ts |     100 |      100 |     100 |     100 |
+  types.ts         |       0 |        0 |       0 |       0 |
+ server            |   87.85 |    75.53 |   96.77 |   92.02 |
   ai-provider.ts   |   85.96 |    72.91 |     100 |    92.3 | 52,65,231-234
-  api-client.ts    |   85.29 |     67.5 |    92.3 |   89.28 | ...33,146-150,209
-  demo-data.ts     |   92.85 |    92.85 |     100 |   92.85 | 243
+  api-client.ts    |    84.5 |    67.56 |     100 |   89.28 | 31-35,94
+  demo-cities.ts   |     100 |      100 |     100 |     100 |
+  demo-data.ts     |   85.71 |    78.57 |     100 |   85.71 | 42
   env.ts           |   63.63 |     62.5 |     100 |      70 | 26-32
+  http-client.ts   |   93.54 |      100 |      80 |   96.42 | 82
+  ...eteo-types.ts |       0 |        0 |       0 |       0 |
   rate-limiter.ts  |     100 |    78.57 |     100 |     100 | 22,62-76
 -------------------|---------|----------|---------|---------|-------------------
 ```
