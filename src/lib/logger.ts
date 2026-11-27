@@ -4,15 +4,16 @@
  * retaining helpful debugging during local development and testing.
  */
 
-const isTestOrProd = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test";
+function isTestOrProduction(): boolean {
+  return process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test";
+}
 
 export const logger = {
   /**
    * Logs informational messages in development only.
    */
   info: (message: string, ...args: unknown[]): void => {
-    if (!isTestOrProd) {
-      // Allowed in development only
+    if (!isTestOrProduction()) {
       process.stdout.write(`[INFO] ${message} ${args.length > 0 ? JSON.stringify(args) : ""}\n`);
     }
   },
@@ -21,7 +22,7 @@ export const logger = {
    * Logs warnings in development only.
    */
   warn: (message: string, ...args: unknown[]): void => {
-    if (!isTestOrProd) {
+    if (!isTestOrProduction()) {
       process.stderr.write(`[WARN] ${message} ${args.length > 0 ? JSON.stringify(args) : ""}\n`);
     }
   },
@@ -30,7 +31,7 @@ export const logger = {
    * Logs operational errors in development only.
    */
   error: (message: string, ...args: unknown[]): void => {
-    if (!isTestOrProd) {
+    if (!isTestOrProduction()) {
       process.stderr.write(`[ERROR] ${message} ${args.length > 0 ? JSON.stringify(args) : ""}\n`);
     }
   },

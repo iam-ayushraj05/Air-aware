@@ -78,6 +78,15 @@ describe("Storage & Zod Schema Validation", () => {
     expect(localStorage.getItem("airaware_tracked_actions_v1")).toBeNull();
   });
 
+  it("falls back to default if stored JSON is valid but does not match schema", () => {
+    localStorage.setItem(
+      "airaware_user_profile_v1",
+      JSON.stringify({ locationName: 99999, latitude: "not-a-number" })
+    );
+    const loaded = loadUserProfile();
+    expect(loaded.locationName).toBe(DEFAULT_PROFILE.locationName);
+  });
+
   it("handles storage exceptions gracefully when localStorage throws", () => {
     const getItemSpy = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
       throw new Error("QuotaExceeded or SecurityError");

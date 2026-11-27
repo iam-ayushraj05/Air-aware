@@ -87,13 +87,22 @@ describe("AQI Calculation & Categorization", () => {
     );
   });
 
-  it("provides full metadata for US and EU standards", () => {
+  it("provides full metadata for US and EU standards across all categories", () => {
     const usInfo = getAQICategoryInfo(45, "US_AQI");
     expect(usInfo.key).toBe("good");
     expect(usInfo.label).toBe("Good");
 
-    const euInfo = getAQICategoryInfo(45, "EU_AQI");
-    expect(euInfo.label).toBe("Good (EU)");
+    expect(getAQICategoryInfo(45, "EU_AQI").label).toBe("Good (EU)");
+    expect(getAQICategoryInfo(75, "EU_AQI").label).toBe("Fair (EU)");
+    expect(getAQICategoryInfo(125, "EU_AQI").label).toBe("Moderate (EU)");
+    expect(getAQICategoryInfo(175, "EU_AQI").label).toBe("Poor (EU)");
+    expect(getAQICategoryInfo(250, "EU_AQI").label).toBe("Very Poor (EU)");
+    expect(getAQICategoryInfo(400, "EU_AQI").label).toBe("Very Poor (EU)");
+  });
+
+  it("handles calculateSubIndex edge conditions", () => {
+    // Empty breakpoints or value falling into no range
+    expect(calculatePm25Aqi(-1)).toBe(0);
   });
 
   it("accurately detects winter smog and thermal inversion conditions", () => {

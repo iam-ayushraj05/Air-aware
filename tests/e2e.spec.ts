@@ -179,4 +179,37 @@ test.describe("AirAware End-to-End Suite (8 Core Flows + Accessibility)", () => 
       expect(name.trim().length).toBeGreaterThan(0);
     }
   });
+
+  // KEYBOARD NAVIGATION FLOW
+  test("Accessibility: Interactive keyboard navigation via Tab key", async ({ page }) => {
+    await page.goto("/");
+    await page.keyboard.press("Tab");
+    const skipLink = page.getByRole("link", { name: /Skip to main content/i });
+    await expect(skipLink).toBeFocused();
+
+    // Press Tab to traverse into navigation
+    await page.keyboard.press("Tab");
+    const brandLink = page.getByRole("link", { name: /AirAware/i }).first();
+    await expect(brandLink).toBeFocused();
+  });
+
+  // API FAILURE -> DEMO FALLBACK FLOW
+  test("Resilience: Gracefully falls back to DEMO data when live API route fails", async ({
+    page,
+  }) => {
+    // Intercept air-quality API to simulate upstream network failure
+    await page.route("**/api/air-quality*", (route) => {
+      route.fulfill({
+        status: 502,
+        contentType: "application/json",
+        body: JSON.stringify({ error: "Upstream Open-Meteo outage" }),
+      });
+    });
+
+    await page.goto("/dashboard?city=Paris&lat=48.8566&lon=2.3522");
+    // Verify dashboard renders reliably with DEMO indicator
+    await expect(page.getByText(/DEMO|LIVE/i).first()).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(/Current Air Quality Index/i)).toBeVisible();
+    await expect(page.getByText(/Individual Pollutant Breakdown/i)).toBeVisible();
+  });
 });

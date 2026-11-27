@@ -60,4 +60,11 @@ describe("Sliding Window Rate Limiter", () => {
 
     nowSpy.mockRestore();
   });
+
+  it("handles limit of 0 or immediate block fallback correctly", () => {
+    const res = checkRateLimit("zero_limit_ip", 0, 5000);
+    expect(res.success).toBe(false);
+    expect(res.remaining).toBe(0);
+    expect(res.resetSeconds).toBeGreaterThanOrEqual(1);
+  });
 });

@@ -13,10 +13,10 @@ Status: **ALL GATES PASSING (100% Test Success, 100 Lighthouse Accessibility)**
 | **TypeScript Strictness**       | 7 strict flags + exactOptionalPropertyTypes, zero `any`, zero `@ts-ignore`     | Zero errors across all project files (`tsc --noEmit`)                                  | **PASSED** |
 | **ESLint Static Analysis**      | Next.js Core Web Vitals + TypeScript ESLint with **zero warnings**             | 0 errors, 0 warnings (`eslint src`, no-console, no-explicit-any enforced)              | **PASSED** |
 | **Production Dependency Audit** | Zero high / critical vulnerabilities (`npm audit --omit=dev`)                  | **0 vulnerabilities**                                                                  | **PASSED** |
-| **Automated Unit Tests**        | Boundary-value tests, property-based tests (`fast-check`), mock testing        | **80 passed out of 80 tests across 17 test suites**                                    | **PASSED** |
-| **Test Coverage Thresholds**    | ≥ 85% lines/functions/statements, ≥ 80% branches for src/lib & src/server      | **Lines: 93.75%**, **Functions: 98.78%**, **Statements: 91.09%**, **Branches: 81.10%** | **PASSED** |
+| **Automated Unit Tests**        | Boundary-value tests, property-based tests (`fast-check`), mock testing        | **92 passed out of 92 tests across 18 test suites**                                    | **PASSED** |
+| **Test Coverage Thresholds**    | ≥ 85% lines/functions/statements, ≥ 80% branches for src/lib & src/server      | **Lines: 98.21%**, **Functions: 98.80%**, **Statements: 96.36%**, **Branches: 90.17%** | **PASSED** |
 | **Component Architecture**      | Every component < 120 lines, all files <= 250 lines, pure functions < 30 lines | **100% compliant** across all 11 feature domains                                       | **PASSED** |
-| **End-to-End Test Suite**       | Playwright E2E covering 8 core user flows + keyboard & screen reader a11y      | **9 passed out of 9 tests (100%)** (`npx playwright test`)                             | **PASSED** |
+| **End-to-End Test Suite**       | Playwright E2E covering 8 core user flows + keyboard & screen reader a11y      | **11 passed out of 11 tests (100%)** (`npx playwright test`)                           | **PASSED** |
 | **Lighthouse Accessibility**    | Production build audit against WCAG 2.2 AA standards                           | **100 / 100**                                                                          | **PASSED** |
 | **Lighthouse Performance**      | ≥ 95 on mobile/desktop production build                                        | **95 / 100**                                                                           | **PASSED** |
 | **Lighthouse Best Practices**   | ≥ 95 on console hygiene, HTTPS, and modern web standards                       | **96 / 100**                                                                           | **PASSED** |
@@ -128,7 +128,7 @@ Audited URL: `http://127.0.0.1:3005` (Production Build)
 ==================================================
   LIGHTHOUSE PRODUCTION AUDIT SCORES
 ==================================================
-  Accessibility:       100 / 100   (WCAG 2.2 AA / AAA Compliant)
+  Accessibility:       100 / 100   (WCAG 2.2 AA Compliant)
   Performance:          95 / 100   (Optimized Turbopack Bundle)
   Best Practices:       96 / 100   (Zero console errors, secure CSP)
   SEO:                 100 / 100   (Complete metadata & semantic HTML)
@@ -143,29 +143,29 @@ Audited URL: `http://127.0.0.1:3005` (Production Build)
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   91.09 |     81.1 |   98.78 |   93.75 |
- lib               |   93.57 |    86.12 |     100 |      95 |
-  aqi.ts           |      88 |    89.47 |     100 |   85.71 | 17,33,84-90
-  constants.ts     |     100 |      100 |     100 |     100 |
-  formatters.ts    |   85.71 |      100 |     100 |   84.61 | 20,43
-  indoor.ts        |    96.1 |    91.42 |     100 |   97.29 | 110,120
-  logger.ts        |    62.5 |    35.71 |     100 |    62.5 | 16,25,34
-  ...on-helpers.ts |     100 |      100 |     100 |     100 |
-  ...mendations.ts |     100 |    93.02 |     100 |     100 | 48,172,191
-  result.ts        |     100 |      100 |     100 |     100 |
-  ...e-builders.ts |     100 |    86.36 |     100 |     100 | 167-176
-  storage.ts       |    90.9 |    58.33 |     100 |     100 | 102-108,117-201
-  ...ainability.ts |     100 |      100 |     100 |     100 |
-  types.ts         |       0 |        0 |       0 |       0 |
- server            |   87.85 |    75.53 |   96.77 |   92.02 |
-  ai-provider.ts   |   85.96 |    72.91 |     100 |    92.3 | 52,65,231-234
-  api-client.ts    |    84.5 |    67.56 |     100 |   89.28 | 31-35,94
-  demo-cities.ts   |     100 |      100 |     100 |     100 |
-  demo-data.ts     |   85.71 |    78.57 |     100 |   85.71 | 42
-  env.ts           |   63.63 |     62.5 |     100 |      70 | 26-32
-  http-client.ts   |   93.54 |      100 |      80 |   96.42 | 82
-  ...eteo-types.ts |       0 |        0 |       0 |       0 |
-  rate-limiter.ts  |     100 |    78.57 |     100 |     100 | 22,62-76
+All files          |   96.36 |    90.17 |    98.80 |   98.21 |
+ lib               |   96.07 |    91.38 |      100 |   97.69 |
+  aqi.ts           |      96 |    96.49 |      100 |   95.23 | 17,33
+  constants.ts     |     100 |      100 |      100 |     100 |
+  formatters.ts    |   85.71 |      100 |      100 |   84.61 | 20,43
+  indoor.ts        |    96.1 |    91.42 |      100 |   97.29 | 110,120
+  logger.ts        |     100 |    78.57 |      100 |     100 | 17,26,35
+  ...on-helpers.ts |     100 |      100 |      100 |     100 |
+  ...mendations.ts |     100 |    93.02 |      100 |     100 | 44,168,187
+  result.ts        |     100 |      100 |      100 |     100 |
+  ...e-builders.ts |     100 |    86.36 |      100 |     100 | 167-176
+  storage.ts       |    90.9 |    66.66 |      100 |     100 | 102-105,117-201
+  ...ainability.ts |     100 |      100 |      100 |     100 |
+  types.ts         |       0 |        0 |        0 |       0 |
+ server            |   96.74 |    88.82 |    96.87 |   98.94 |
+  ai-provider.ts   |   92.98 |    79.16 |      100 |     100 | ...43-158,196,227
+  api-client.ts    |   98.59 |    90.54 |      100 |   98.21 | 94
+  demo-cities.ts   |     100 |      100 |      100 |     100 |
+  demo-data.ts     |     100 |    92.85 |      100 |     100 | 20
+  env.ts           |     100 |     87.5 |      100 |     100 | 26
+  http-client.ts   |   93.54 |      100 |       80 |   96.42 | 82
+  ...eteo-types.ts |       0 |        0 |        0 |       0 |
+  rate-limiter.ts  |     100 |    85.71 |      100 |     100 | 22,76
 -------------------|---------|----------|---------|---------|-------------------
 ```
 

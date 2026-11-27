@@ -149,4 +149,37 @@ describe("Security Safeguards & AI Defense", () => {
     expect(res.summary).toBe("OpenAI summary for clean air");
     expect(res.isDemoFallback).toBe(false);
   });
+
+  it("handles low AQI child guidance and indoor plant inquiries", () => {
+    const lowAqiSnap = { ...getFallbackDemoData(), aqi: 45 };
+    const childRes = generateDeterministicAdvisorResponse("recess for school kids", lowAqiSnap, {});
+    expect(childRes.routineAdvice).toContain("safe under current conditions");
+
+    const plantRes = generateDeterministicAdvisorResponse(
+      "indoor plant purifier advice",
+      lowAqiSnap,
+      {}
+    );
+    expect(plantRes.indoorGuidance).toContain("Mechanical True HEPA filters");
+  });
+
+  it("safely catches external AI provider failure and falls back to deterministic generator", async () => {
+    vi.spyOn(envModule, "getServerEnv").mockReturnValue({
+      AI_PROVIDER: "gemini",
+      AI_API_KEY: "test-gemini-key",
+      AI_MODEL: "gemini-1.5-flash",
+      NODE_ENV: "test",
+    });
+
+    global.fetch = vi.fn().mockRejectedValue(new Error("Gemini timeout"));
+
+    const snap = getFallbackDemoData();
+    const res = await getAiAdvisorResponse({
+      userQuestion: "What to do during smog?",
+      airQuality: snap,
+    });
+
+    expect(res.isDemoFallback).toBe(true);
+    expect(res.summary).toContain("AirAware assessment");
+  });
 });

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { searchLocations, getLiveAirQuality } from "../api-client";
+import { searchLocations, getLiveAirQuality, getWeatherConditionText } from "../api-client";
 
 describe("API Client & SSRF Protection", () => {
   beforeEach(() => {
@@ -104,6 +104,57 @@ describe("API Client & SSRF Protection", () => {
     expect(snapshot.dataSource).toBe("live");
     expect(snapshot.weather.conditionText).toBe("Foggy / Smog Layer");
     expect(snapshot.isWinterSmogActive).toBe(true);
+  });
+
+  it("formats moderate status when pollutant exceeds safeLimit but is under 1.5x", async () => {
+    const mockModerateAQ = {
+      current: {
+        pm2_5: 20.0, // safeLimit is 15 -> 20 is > 15 and <= 22.5 (moderate)
+        pm10: 50.0, // safeLimit is 45 -> 50 is > 45 and <= 67.5 (moderate)
+        us_aqi: 65,
+      },
+      hourly: {
+        time: ["2026-11-26T00:00"],
+        pm2_5: [20.0],
+        pm10: [50.0],
+        us_aqi: [65],
+      },
+    };
+
+    const mockWeather = {
+      current: {
+        temperature_2m: 18.0,
+        relative_humidity_2m: 50,
+        wind_speed_10m: 15.0,
+        weather_code: 0,
+      },
+    };
+
+    global.fetch = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockModerateAQ,
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockWeather,
+      } as Response);
+
+    const snapshot = await getLiveAirQuality(28.61, 77.21, "New Delhi");
+    expect(snapshot.pollutants.pm2_5.status).toBe("moderate");
+    expect(snapshot.pollutants.pm10.status).toBe("moderate");
+  });
+
+  it("maps WMO weather codes to expected descriptors accurately", () => {
+    expect(getWeatherConditionText(0)).toBe("Clear Sky");
+    expect(getWeatherConditionText(2)).toBe("Partly Cloudy");
+    expect(getWeatherConditionText(45)).toBe("Foggy / Smog Layer");
+    expect(getWeatherConditionText(60)).toBe("Light Rain / Drizzle");
+    expect(getWeatherConditionText(73)).toBe("Snow Flurries");
+    expect(getWeatherConditionText(81)).toBe("Rain Showers");
+    expect(getWeatherConditionText(96)).toBe("Thunderstorm");
+    expect(getWeatherConditionText(10)).toBe("Stable Atmosphere");
   });
 
   it("falls back to demo data if live fetch encounters an error", async () => {
