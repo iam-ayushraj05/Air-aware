@@ -1,0 +1,9 @@
+.next
+node_modules
+coverage
+build
+dist
+*.log
+*-report.json
+playwright-report
+test-results

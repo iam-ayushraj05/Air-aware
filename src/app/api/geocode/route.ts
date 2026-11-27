@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { searchLocations } from "@/server/api-client";
 import { checkRateLimit } from "@/server/rate-limiter";
+import { logger } from "@/lib/logger";
 
 const GeocodeQuerySchema = z
   .object({
@@ -47,7 +48,7 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (err: unknown) {
-    console.error("Geocoding route error:", err instanceof Error ? err.message : "Unknown error");
+    logger.error("Geocoding route error:", err instanceof Error ? err.message : "Unknown error");
     return NextResponse.json({ error: "Location search failed." }, { status: 502 });
   }
 }

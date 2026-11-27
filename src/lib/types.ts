@@ -1,12 +1,7 @@
 export type AQIStandard = "US_AQI" | "EU_AQI";
 
 export type AQICategory =
-  | "good"
-  | "moderate"
-  | "sensitive"
-  | "unhealthy"
-  | "very_unhealthy"
-  | "hazardous";
+  "good" | "moderate" | "sensitive" | "unhealthy" | "very_unhealthy" | "hazardous";
 
 export interface AQICategoryInfo {
   key: AQICategory;

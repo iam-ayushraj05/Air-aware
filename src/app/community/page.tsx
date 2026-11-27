@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { CommunityBoard } from "@/features/community/CommunityBoard";
@@ -30,7 +30,8 @@ export default function CommunityPage() {
               <span>Cleaner Air Starts Together</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              Join neighborhood clean-air challenges, pledge emission reductions, and track collective progress.
+              Join neighborhood clean-air challenges, pledge emission reductions, and track
+              collective progress.
             </p>
           </div>
 

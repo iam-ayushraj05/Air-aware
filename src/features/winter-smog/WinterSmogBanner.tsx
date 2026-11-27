@@ -1,4 +1,3 @@
-import React from "react";
 import { Snowflake, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -60,7 +59,8 @@ export function WinterSmogBanner({ isActive, aqi: _aqi, tempC, windSpeed }: Wint
         <div className="bg-black/30 p-2.5 rounded-xl border border-white/10">
           <strong className="block text-amber-300 mb-0.5">3. Avoid Any Biomass Burning</strong>
           <span className="text-slate-300">
-            Dry leaves or wood burning under inversion immediately spikes neighborhood PM2.5 past 400 µg/m³.
+            Dry leaves or wood burning under inversion immediately spikes neighborhood PM2.5 past
+            400 µg/m³.
           </span>
         </div>
       </div>

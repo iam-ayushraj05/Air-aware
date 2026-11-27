@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -17,35 +17,38 @@ import {
   Settings,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { MobileNavDrawer } from "./components/MobileNavDrawer";
 
+const MAIN_TABS = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/advisor", label: "AI Advisor", icon: Sparkles },
+  { href: "/planner", label: "Planner", icon: CalendarDays },
+  { href: "/impact", label: "Impact", icon: Award },
+];
+
+const SECONDARY_TABS = [
+  { href: "/indoor-lab", label: "Indoor Air Lab", icon: Home },
+  { href: "/alternatives", label: "Sustainable Choices", icon: RefreshCw },
+  { href: "/community", label: "Community Challenges", icon: Users },
+  { href: "/explorer", label: "Pollution Explorer", icon: Search },
+  { href: "/settings", label: "Settings & Profile", icon: Settings },
+];
+
+/**
+ * Mobile-responsive bottom navigation bar with responsive drawer sheet.
+ */
 export function MobileNav() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const mainTabs = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/advisor", label: "AI Advisor", icon: Sparkles },
-    { href: "/planner", label: "Planner", icon: CalendarDays },
-    { href: "/impact", label: "Impact", icon: Award },
-  ];
-
-  const secondaryTabs = [
-    { href: "/indoor-lab", label: "Indoor Air Lab", icon: Home },
-    { href: "/alternatives", label: "Sustainable Choices", icon: RefreshCw },
-    { href: "/community", label: "Community Challenges", icon: Users },
-    { href: "/explorer", label: "Pollution Explorer", icon: Search },
-    { href: "/settings", label: "Settings & Profile", icon: Settings },
-  ];
-
   return (
     <>
-      {/* Mobile Bottom Navigation Bar */}
       <nav
         className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800"
         aria-label="Mobile Navigation Bar"
       >
         <div className="grid grid-cols-5 h-16 items-center">
-          {mainTabs.map((tab) => {
+          {MAIN_TABS.map((tab) => {
             const Icon = tab.icon;
             const isActive = pathname === tab.href;
             return (
@@ -83,59 +86,12 @@ export function MobileNav() {
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
-      {drawerOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Additional Navigation Menu"
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden flex justify-end"
-        >
-          <div className="w-72 bg-white dark:bg-slate-900 h-full p-5 overflow-y-auto shadow-2xl flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
-                <span className="font-bold text-slate-900 dark:text-white">All Features</span>
-                <button
-                  type="button"
-                  onClick={() => setDrawerOpen(false)}
-                  className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  aria-label="Close menu"
-                >
-                  <X className="w-5 h-5" aria-hidden="true" />
-                </button>
-              </div>
-
-              <div className="space-y-1">
-                {secondaryTabs.map((tab) => {
-                  const Icon = tab.icon;
-                  const isActive = pathname === tab.href;
-                  return (
-                    <Link
-                      key={tab.href}
-                      href={tab.href}
-                      onClick={() => setDrawerOpen(false)}
-                      className={clsx(
-                        "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium min-h-[44px]",
-                        isActive
-                          ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold"
-                          : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                      )}
-                      aria-current={isActive ? "page" : undefined}
-                    >
-                      <Icon className="w-5 h-5 text-emerald-600" aria-hidden="true" />
-                      <span>{tab.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500">
-              AirAware Urban Assistant
-            </div>
-          </div>
-        </div>
-      )}
+      <MobileNavDrawer
+        isOpen={drawerOpen}
+        pathname={pathname}
+        tabs={SECONDARY_TABS}
+        onClose={() => setDrawerOpen(false)}
+      />
     </>
   );
 }

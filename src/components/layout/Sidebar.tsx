@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -84,7 +83,8 @@ export function Sidebar() {
             <span>Winter Smog Active?</span>
           </div>
           <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-            Automatic inversion detection alerts trigger when cold air and low wind trap surface PM2.5.
+            Automatic inversion detection alerts trigger when cold air and low wind trap surface
+            PM2.5.
           </p>
         </div>
       </div>

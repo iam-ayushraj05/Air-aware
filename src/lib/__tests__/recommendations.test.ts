@@ -60,7 +60,13 @@ describe("Recommendation Engine Matrix", () => {
     const snap = createMockSnapshot({
       aqi: 35,
       category: "good",
-      weather: { temperature: 20, humidity: 50, windSpeed: 18, weatherCode: 1, conditionText: "Clear" },
+      weather: {
+        temperature: 20,
+        humidity: 50,
+        windSpeed: 18,
+        weatherCode: 1,
+        conditionText: "Clear",
+      },
     });
     const recs = generateRecommendations(snap, {});
 
@@ -115,7 +121,13 @@ describe("Recommendation Engine Matrix", () => {
   it("generates anti-idling community guidance during low-wind stagnation", () => {
     const snap = createMockSnapshot({
       aqi: 170,
-      weather: { temperature: 12, humidity: 80, windSpeed: 4, weatherCode: 71, conditionText: "Stagnant" },
+      weather: {
+        temperature: 12,
+        humidity: 80,
+        windSpeed: 4,
+        weatherCode: 71,
+        conditionText: "Stagnant",
+      },
     });
     const recs = generateRecommendations(snap, {});
 

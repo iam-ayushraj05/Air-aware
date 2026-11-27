@@ -81,10 +81,22 @@ export const SUSTAINABLE_ALTERNATIVES: SustainableAlternativeComparison[] = [
   },
 ];
 
+export interface PersonalImpactResult {
+  totalCompleted: number;
+  totalEmissionsSavedKg: number;
+  totalPmAvoidedGrams: number;
+  streakDays: number;
+  treeEquivalents: number;
+  disclaimer: string;
+}
+
 /**
  * Calculates aggregated personal impact statistics from logged actions.
+ *
+ * @param actions Array of user logged actions
+ * @returns PersonalImpactResult metrics
  */
-export function calculatePersonalImpact(actions: TrackedActionItem[]) {
+export function calculatePersonalImpact(actions: TrackedActionItem[]): PersonalImpactResult {
   const totalCompleted = actions.length;
 
   let totalEmissionsSavedKg = 0;
@@ -95,11 +107,8 @@ export function calculatePersonalImpact(actions: TrackedActionItem[]) {
     totalPmAvoidedGrams += item.pmAvoidedGrams;
   }
 
-  // Calculate streak based on distinct dates
   const dates = new Set(actions.map((a) => a.timestamp.split("T")[0]));
   const streakDays = dates.size;
-
-  // Trees equivalent: 1 mature tree absorbs ~21 kg CO2 per year (~0.058 kg/day)
   const treeEquivalents = totalEmissionsSavedKg / 21;
 
   return {
@@ -132,6 +141,10 @@ export const DEMO_COMMUNITY_STATS = {
     { neighborhood: "Downtown North", action: "Switched to Metro Commute", time: "12m ago" },
     { neighborhood: "Westside Park", action: "Zero Idling at School Pickup", time: "28m ago" },
     { neighborhood: "Riverdale", action: "Purchased True HEPA for Bedroom", time: "1h ago" },
-    { neighborhood: "East Suburbs", action: "Replaced 2km drive with electric bike", time: "2h ago" },
+    {
+      neighborhood: "East Suburbs",
+      action: "Replaced 2km drive with electric bike",
+      time: "2h ago",
+    },
   ],
 };

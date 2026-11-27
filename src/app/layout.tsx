@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import React from "react";
 import { Footer } from "@/components/layout/Footer";
 import { MobileNav } from "@/components/layout/MobileNav";
 
@@ -21,9 +20,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
-        <div className="flex-1 flex flex-col">
-          {children}
-        </div>
+        <div className="flex-1 flex flex-col">{children}</div>
         <Footer />
         <MobileNav />
       </body>

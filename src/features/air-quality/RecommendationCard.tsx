@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { StructuredRecommendation } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { CheckCircle2, ChevronDown } from "lucide-react";
@@ -9,11 +9,8 @@ interface RecommendationCardProps {
   onToggleComplete?: (id: string) => void;
 }
 
-export function RecommendationCard({
-  recommendation,
-  onToggleComplete,
-}: RecommendationCardProps) {
-  const [expanded, setExpanded] = React.useState(false);
+export function RecommendationCard({ recommendation, onToggleComplete }: RecommendationCardProps) {
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <Card

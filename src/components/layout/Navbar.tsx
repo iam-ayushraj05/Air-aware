@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Wind, MapPin, Bell, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -35,7 +35,9 @@ export function Navbar({
                 AI Urban
               </span>
             </span>
-            <span className="text-xs text-slate-500 hidden sm:block">Breathe Smarter, Live Safer</span>
+            <span className="text-xs text-slate-500 hidden sm:block">
+              Breathe Smarter, Live Safer
+            </span>
           </div>
         </Link>
 
@@ -66,7 +68,10 @@ export function Navbar({
           )}
 
           <Link href="/advisor" aria-label="Open AI Advisor">
-            <Button size="sm" className="hidden md:flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800">
+            <Button
+              size="sm"
+              className="hidden md:flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800"
+            >
               <Sparkles className="w-4 h-4" aria-hidden="true" />
               <span>AI Advisor</span>
             </Button>
@@ -80,7 +85,10 @@ export function Navbar({
             <div className="relative">
               <Bell className="w-4 h-4 text-slate-600 dark:text-slate-300" aria-hidden="true" />
               {hasAlert && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-500" aria-hidden="true" />
+                <span
+                  className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-500"
+                  aria-hidden="true"
+                />
               )}
             </div>
             <span>Settings</span>

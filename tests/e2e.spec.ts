@@ -9,7 +9,9 @@ test.describe("AirAware End-to-End Suite (8 Core Flows + Accessibility)", () => 
   });
 
   // FLOW 1: Open application landing page
-  test("Flow 1: Landing page loads with hero, live hotspots, and calculation disclosure", async ({ page }) => {
+  test("Flow 1: Landing page loads with hero, live hotspots, and calculation disclosure", async ({
+    page,
+  }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/AirAware/i);
 
@@ -53,7 +55,9 @@ test.describe("AirAware End-to-End Suite (8 Core Flows + Accessibility)", () => 
   });
 
   // FLOW 3: View AQI and pollutant breakdown
-  test("Flow 3: AQI overview, pollutant grid, and weather cards render accurately", async ({ page }) => {
+  test("Flow 3: AQI overview, pollutant grid, and weather cards render accurately", async ({
+    page,
+  }) => {
     await page.goto("/dashboard");
     await expect(page.locator("#main-content")).toBeVisible();
 
@@ -72,7 +76,9 @@ test.describe("AirAware End-to-End Suite (8 Core Flows + Accessibility)", () => 
   // FLOW 4: Create/update lifestyle profile
   test("Flow 4: Update lifestyle preferences in settings", async ({ page }) => {
     await page.goto("/settings");
-    await expect(page.getByRole("heading", { name: /Settings & Household Profile/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Settings & Household Profile/i })
+    ).toBeVisible();
 
     // Submit preferences form
     const saveButton = page.getByRole("button", { name: /Save Preferences & Profile/i });
@@ -102,10 +108,14 @@ test.describe("AirAware End-to-End Suite (8 Core Flows + Accessibility)", () => 
   // FLOW 6: Open AI advisor and ask question
   test("Flow 6: Ask AirAware AI assistant and receive grounded answer", async ({ page }) => {
     await page.goto("/advisor");
-    await expect(page.getByRole("heading", { level: 1, name: /AirAware AI Assistant/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: /AirAware AI Assistant/i })
+    ).toBeVisible();
 
     // Click suggested prompt
-    const suggestedPrompt = page.getByRole("button", { name: /Is it safe to go jogging outside today\?/i });
+    const suggestedPrompt = page.getByRole("button", {
+      name: /Is it safe to go jogging outside today\?/i,
+    });
     if (await suggestedPrompt.isVisible()) {
       await suggestedPrompt.click();
     } else {
@@ -115,16 +125,22 @@ test.describe("AirAware End-to-End Suite (8 Core Flows + Accessibility)", () => 
     }
 
     // Expect response with evidence or AI fallback mode
-    await expect(page.getByText(/Evidence|AI fallback mode/i).first()).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(/Evidence|AI fallback mode/i).first()).toBeVisible({
+      timeout: 15000,
+    });
   });
 
   // FLOW 7: Complete daily sustainable action
   test("Flow 7: Browse sustainable alternatives and log an action", async ({ page }) => {
     await page.goto("/alternatives");
-    await expect(page.getByRole("heading", { name: /Small Changes. Cleaner Cities./i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Small Changes. Cleaner Cities./i })
+    ).toBeVisible();
 
     // Find and adopt an action
-    const adoptButton = page.getByRole("button", { name: /Adopt this Sustainable Action/i }).first();
+    const adoptButton = page
+      .getByRole("button", { name: /Adopt this Sustainable Action/i })
+      .first();
     if (await adoptButton.isVisible()) {
       await adoptButton.click();
       await expect(page.getByText(/added to your Impact Tracker/i)).toBeVisible();

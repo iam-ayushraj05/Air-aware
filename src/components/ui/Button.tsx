@@ -1,13 +1,13 @@
-import React from "react";
+import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { clsx } from "clsx";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "danger" | "ghost";
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
@@ -31,8 +31,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         "bg-emerald-100 text-emerald-900 hover:bg-emerald-200 dark:bg-emerald-950 dark:text-emerald-200",
       outline:
         "border border-slate-300 dark:border-slate-700 bg-transparent text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800",
-      danger:
-        "bg-rose-600 hover:bg-rose-700 text-white focus-visible:outline-rose-500",
+      danger: "bg-rose-600 hover:bg-rose-700 text-white focus-visible:outline-rose-500",
       ghost:
         "bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800",
     };

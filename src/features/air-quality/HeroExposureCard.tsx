@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { HelpCircle, ChevronDown, CheckCircle2 } from "lucide-react";
 import { clsx } from "clsx";
 
@@ -28,7 +28,10 @@ export function HeroExposureCard() {
           >
             <HelpCircle className="w-3.5 h-3.5" aria-hidden="true" />
             <span>How we calculate</span>
-            <ChevronDown className={clsx("w-3 h-3 transition-transform", showCalculation && "rotate-180")} aria-hidden="true" />
+            <ChevronDown
+              className={clsx("w-3 h-3 transition-transform", showCalculation && "rotate-180")}
+              aria-hidden="true"
+            />
           </button>
         </div>
       </div>
@@ -43,13 +46,18 @@ export function HeroExposureCard() {
             <span>Calculation Methodology & Assumptions</span>
           </div>
           <p className="text-[11px] leading-relaxed text-slate-300">
-            <strong>Baseline:</strong> Without filtration, natural outdoor particulate infiltration into residential apartments allows 50%–70% of ambient outdoor PM2.5 to enter living areas.
+            <strong>Baseline:</strong> Without filtration, natural outdoor particulate infiltration
+            into residential apartments allows 50%–70% of ambient outdoor PM2.5 to enter living
+            areas.
           </p>
           <p className="text-[11px] leading-relaxed text-slate-300">
-            <strong>Mitigation:</strong> Operating a certified True HEPA mechanical filter sized for 4–5 Air Changes per Hour (ACH) matched to room Clean Air Delivery Rate (CADR) in a closed room reduces indoor PM2.5 by 60%–85% relative to outdoor ambient air.
+            <strong>Mitigation:</strong> Operating a certified True HEPA mechanical filter sized for
+            4–5 Air Changes per Hour (ACH) matched to room Clean Air Delivery Rate (CADR) in a
+            closed room reduces indoor PM2.5 by 60%–85% relative to outdoor ambient air.
           </p>
           <div className="text-[10px] text-slate-400 border-t border-slate-800 pt-1.5">
-            Sources: US EPA Guide to Air Cleaners in the Home (EPA-402-F-08-004) &amp; Cummings &amp; Waring Indoor Air Quality Meta-Analysis.
+            Sources: US EPA Guide to Air Cleaners in the Home (EPA-402-F-08-004) &amp; Cummings
+            &amp; Waring Indoor Air Quality Meta-Analysis.
           </div>
         </div>
       )}

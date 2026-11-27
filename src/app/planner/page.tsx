@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { DailyRoutineTimeline } from "@/features/routine/DailyRoutineTimeline";
@@ -20,10 +20,13 @@ export default function PlannerPage() {
     const prof = loadUserProfile();
     setProfile(prof);
 
-    fetch(`/api/air-quality?lat=${prof.latitude}&lon=${prof.longitude}&name=${encodeURIComponent(prof.locationName)}`)
+    fetch(
+      `/api/air-quality?lat=${prof.latitude}&lon=${prof.longitude}&name=${encodeURIComponent(prof.locationName)}`
+    )
       .then((r) => r.json())
       .then((data) => {
-        const snap = data.data ?? getFallbackDemoData(prof.locationName, prof.latitude, prof.longitude);
+        const snap =
+          data.data ?? getFallbackDemoData(prof.locationName, prof.latitude, prof.longitude);
         setAirData(snap);
         setRoutinePlan(buildDailyRoutinePlan(snap, prof));
       })
@@ -59,14 +62,17 @@ export default function PlannerPage() {
               <span className="text-xs uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
                 Daily Routine Planner
               </span>
-              <span className="text-xs text-slate-500">Morning &bull; Afternoon &bull; Evening &bull; Night</span>
+              <span className="text-xs text-slate-500">
+                Morning &bull; Afternoon &bull; Evening &bull; Night
+              </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
               <CalendarDays className="w-6 h-6 text-emerald-600" aria-hidden="true" />
               <span>Build My Clean-Air Day</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              A sequence of specific actions timed around traffic rush hours and diurnal temperature inversions.
+              A sequence of specific actions timed around traffic rush hours and diurnal temperature
+              inversions.
             </p>
           </div>
 

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { logger } from "@/lib/logger";
 
 const ServerEnvSchema = z.object({
   AI_PROVIDER: z.enum(["gemini", "openai", "anthropic", "demo"]).default("demo"),
@@ -22,7 +23,7 @@ export function getServerEnv(): ServerEnv {
   });
 
   if (!result.success) {
-    console.error("Environment variable validation failed:", result.error.format());
+    logger.error("Environment variable validation failed:", result.error.format());
     // Safe default to prevent server crash
     parsedEnv = {
       AI_PROVIDER: "demo",

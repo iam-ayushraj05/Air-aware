@@ -1,4 +1,3 @@
-import React from "react";
 import { AirQualitySnapshot } from "@/lib/types";
 import { getAQICategoryInfo } from "@/lib/aqi";
 import { Card } from "@/components/ui/Card";
@@ -32,12 +31,15 @@ export function AQICard({ snapshot }: AQICardProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
         <div>
           <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
-            Current Air Quality Index ({snapshot.standard === "US_AQI" ? "US EPA Standard" : "European Standard"})
+            Current Air Quality Index (
+            {snapshot.standard === "US_AQI" ? "US EPA Standard" : "European Standard"})
           </span>
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <span>{snapshot.location.name}</span>
             {snapshot.location.country && (
-              <span className="text-sm font-normal text-slate-500">({snapshot.location.country})</span>
+              <span className="text-sm font-normal text-slate-500">
+                ({snapshot.location.country})
+              </span>
             )}
           </h2>
         </div>
@@ -72,7 +74,10 @@ export function AQICard({ snapshot }: AQICardProps) {
         {/* Health Implications & Context */}
         <div className="md:col-span-7 bg-slate-50 dark:bg-slate-800/60 rounded-xl p-4 border border-slate-200/60 dark:border-slate-700/60">
           <div className="flex items-start gap-2.5">
-            <ShieldAlert className="w-4 h-4 text-emerald-700 dark:text-emerald-400 mt-0.5 shrink-0" aria-hidden="true" />
+            <ShieldAlert
+              className="w-4 h-4 text-emerald-700 dark:text-emerald-400 mt-0.5 shrink-0"
+              aria-hidden="true"
+            />
             <div className="space-y-1 text-xs">
               <strong className="text-slate-900 dark:text-slate-100 font-semibold block">
                 What this means for your household:

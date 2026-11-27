@@ -14,6 +14,7 @@ const eslintConfig = [
   {
     rules: {
       "react/no-danger": "error",
+      "no-console": "error",
       "@next/next/no-img-element": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
@@ -23,7 +24,7 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
-      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-explicit-any": "error",
     },
   },
 ];

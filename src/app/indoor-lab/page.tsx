@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { RoomAssessment } from "@/features/indoor/RoomAssessment";
@@ -31,7 +31,8 @@ export default function IndoorLabPage() {
               <span>Make Your Home a Cleaner-Air Zone</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              Interactive room assessments, True HEPA air cleaner guidelines, and evidence-based indoor emission controls.
+              Interactive room assessments, True HEPA air cleaner guidelines, and evidence-based
+              indoor emission controls.
             </p>
           </div>
 
@@ -49,7 +50,9 @@ export default function IndoorLabPage() {
                 </h3>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Stove-top frying and boiling in unventilated kitchens easily causes indoor PM2.5 to exceed 200 µg/m³. Always run kitchen exhaust fans before turning on the heat, and cover pots to prevent oil aerosol dispersion.
+                Stove-top frying and boiling in unventilated kitchens easily causes indoor PM2.5 to
+                exceed 200 µg/m³. Always run kitchen exhaust fans before turning on the heat, and
+                cover pots to prevent oil aerosol dispersion.
               </p>
             </Card>
 
@@ -62,7 +65,9 @@ export default function IndoorLabPage() {
                 </h3>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Choose purifiers certified for True HEPA (H13/H14) with a Clean Air Delivery Rate (CADR) sufficient to exchange the room volume 4–5 times per hour. Avoid ozone-generating ionizers which can irritate sensitive airways.
+                Choose purifiers certified for True HEPA (H13/H14) with a Clean Air Delivery Rate
+                (CADR) sufficient to exchange the room volume 4–5 times per hour. Avoid
+                ozone-generating ionizers which can irritate sensitive airways.
               </p>
             </Card>
 
@@ -75,7 +80,9 @@ export default function IndoorLabPage() {
                 </h3>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Never keep windows permanently open during heavy smog or temperature inversion mornings. Instead, create a 15-minute cross-breeze during the warmest afternoon hours when vertical wind mixing has dispersed ground-level particulates.
+                Never keep windows permanently open during heavy smog or temperature inversion
+                mornings. Instead, create a 15-minute cross-breeze during the warmest afternoon
+                hours when vertical wind mixing has dispersed ground-level particulates.
               </p>
             </Card>
 
@@ -88,7 +95,9 @@ export default function IndoorLabPage() {
                 </h3>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Dry brooming causes fine settled dust to become airborne in the breathing zone for up to two hours. Use damp microfiber cloths and vacuum cleaners with sealed HEPA exhaust filtration.
+                Dry brooming causes fine settled dust to become airborne in the breathing zone for
+                up to two hours. Use damp microfiber cloths and vacuum cleaners with sealed HEPA
+                exhaust filtration.
               </p>
             </Card>
           </div>

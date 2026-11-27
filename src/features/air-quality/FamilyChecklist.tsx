@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { CheckSquare, Square, HeartHandshake } from "lucide-react";
 import { clsx } from "clsx";
@@ -17,13 +17,15 @@ const DEFAULT_FAMILY_CHECKLIST: ChecklistItem[] = [
     id: "fam-1",
     target: "children",
     title: "Relocate outdoor recess & school sports indoors",
-    description: "Young lungs inhale more air per pound of body weight, accelerating fine particle deposition.",
+    description:
+      "Young lungs inhale more air per pound of body weight, accelerating fine particle deposition.",
   },
   {
     id: "fam-2",
     target: "elderly",
     title: "Verify rescue inhalers / cardiovascular medications are accessible",
-    description: "PM2.5 exposure triggers systemic inflammation and vascular constriction within hours.",
+    description:
+      "PM2.5 exposure triggers systemic inflammation and vascular constriction within hours.",
   },
   {
     id: "fam-3",
@@ -94,7 +96,10 @@ export function FamilyChecklist() {
               aria-pressed={isDone}
             >
               {isDone ? (
-                <CheckSquare className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" aria-hidden="true" />
+                <CheckSquare
+                  className="w-5 h-5 text-emerald-600 mt-0.5 shrink-0"
+                  aria-hidden="true"
+                />
               ) : (
                 <Square className="w-5 h-5 text-slate-300 mt-0.5 shrink-0" aria-hidden="true" />
               )}
@@ -113,9 +118,7 @@ export function FamilyChecklist() {
                     {item.target}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  {item.description}
-                </p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.description}</p>
               </div>
             </button>
           );

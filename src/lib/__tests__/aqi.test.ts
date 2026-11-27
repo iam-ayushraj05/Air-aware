@@ -75,19 +75,15 @@ describe("AQI Calculation & Categorization", () => {
     };
 
     fc.assert(
-      fc.property(
-        fc.integer({ min: 0, max: 500 }),
-        fc.integer({ min: 0, max: 500 }),
-        (a, b) => {
-          const catA = getAQICategory(a);
-          const catB = getAQICategory(b);
-          if (a <= b) {
-            return (rank[catA] ?? 0) <= (rank[catB] ?? 0);
-          } else {
-            return (rank[catA] ?? 0) >= (rank[catB] ?? 0);
-          }
+      fc.property(fc.integer({ min: 0, max: 500 }), fc.integer({ min: 0, max: 500 }), (a, b) => {
+        const catA = getAQICategory(a);
+        const catB = getAQICategory(b);
+        if (a <= b) {
+          return (rank[catA] ?? 0) <= (rank[catB] ?? 0);
+        } else {
+          return (rank[catA] ?? 0) >= (rank[catB] ?? 0);
         }
-      )
+      })
     );
   });
 

@@ -1,0 +1,5 @@
+Contact: mailto:security@airaware.local
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://airaware.local/.well-known/security.txt
+Policy: https://github.com/iam-ayushraj05/Air-aware/security/policy

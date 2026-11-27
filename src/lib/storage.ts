@@ -1,8 +1,12 @@
 import { z } from "zod";
 import { TrackedActionItem, UserLifestyleProfile, UserPreferences } from "./types";
+import { tryCatch } from "./result";
 
 const STORAGE_VERSION = 1;
 
+/**
+ * Zod validation schema for persisted user lifestyle profile.
+ */
 export const UserProfileSchema = z.object({
   version: z.literal(STORAGE_VERSION).default(STORAGE_VERSION),
   locationName: z.string().max(100).default("New Delhi"),
@@ -24,6 +28,9 @@ export const UserProfileSchema = z.object({
   sensitivityLevel: z.enum(["normal", "sensitive", "high_risk"]).default("normal"),
 });
 
+/**
+ * Zod validation schema for user preferences and accessibility settings.
+ */
 export const UserPreferencesSchema = z.object({
   version: z.literal(STORAGE_VERSION).default(STORAGE_VERSION),
   theme: z.enum(["light", "high-contrast"]).default("light"),
@@ -36,6 +43,9 @@ export const UserPreferencesSchema = z.object({
   demoModeOverride: z.boolean().default(false),
 });
 
+/**
+ * Schema for an individual logged sustainable action.
+ */
 export const TrackedActionItemSchema = z.object({
   id: z.string(),
   actionId: z.string(),
@@ -46,6 +56,9 @@ export const TrackedActionItemSchema = z.object({
   category: z.string(),
 });
 
+/**
+ * Schema for array of tracked action items.
+ */
 export const TrackedActionsListSchema = z.object({
   version: z.literal(STORAGE_VERSION).default(STORAGE_VERSION),
   items: z.array(TrackedActionItemSchema).default([]),
@@ -82,98 +95,113 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   demoModeOverride: false,
 };
 
+/**
+ * Generic helper to safely parse JSON from localStorage with a Zod schema.
+ */
+function readStorageItem<T>(key: string, schema: z.ZodType<T>, fallback: T): T {
+  if (typeof window === "undefined") return fallback;
+  const result = tryCatch(() => {
+    const raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    const parsed: unknown = JSON.parse(raw);
+    const validated = schema.safeParse(parsed);
+    return validated.success ? validated.data : fallback;
+  });
+  return result.success ? result.data : fallback;
+}
+
+/**
+ * Generic helper to safely write JSON into localStorage.
+ */
+function writeStorageItem(key: string, value: unknown): void {
+  if (typeof window === "undefined") return;
+  tryCatch(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  });
+}
+
+/**
+ * Loads persisted user lifestyle profile from localStorage with schema validation.
+ *
+ * @returns UserLifestyleProfile object or default profile
+ */
 export function loadUserProfile(): UserLifestyleProfile {
-  if (typeof window === "undefined") return DEFAULT_PROFILE;
-  try {
-    const raw = localStorage.getItem(PROFILE_KEY);
-    if (!raw) return DEFAULT_PROFILE;
-    const parsed = JSON.parse(raw);
-    const result = UserProfileSchema.safeParse(parsed);
-    if (result.success) {
-      const { version: _v, ...profile } = result.data;
-      return profile;
-    }
-    return DEFAULT_PROFILE;
-  } catch {
-    return DEFAULT_PROFILE;
-  }
+  const data = readStorageItem(PROFILE_KEY, UserProfileSchema, {
+    ...DEFAULT_PROFILE,
+    version: STORAGE_VERSION,
+  });
+  const { version: _v, ...profile } = data;
+  return profile;
 }
 
+/**
+ * Persists user lifestyle profile into localStorage with coordinate rounding.
+ *
+ * @param profile UserLifestyleProfile to store
+ */
 export function saveUserProfile(profile: UserLifestyleProfile): void {
-  if (typeof window === "undefined") return;
-  try {
-    const payload = {
-      ...profile,
-      version: STORAGE_VERSION,
-      latitude: Math.round(profile.latitude * 100) / 100,
-      longitude: Math.round(profile.longitude * 100) / 100,
-    };
-    localStorage.setItem(PROFILE_KEY, JSON.stringify(payload));
-  } catch {
-    // Storage quota or private mode fallback
-  }
+  const payload = {
+    ...profile,
+    version: STORAGE_VERSION,
+    latitude: Math.round(profile.latitude * 100) / 100,
+    longitude: Math.round(profile.longitude * 100) / 100,
+  };
+  writeStorageItem(PROFILE_KEY, payload);
 }
 
+/**
+ * Loads user preferences and accessibility settings with validation.
+ *
+ * @returns UserPreferences object or default preferences
+ */
 export function loadUserPreferences(): UserPreferences {
-  if (typeof window === "undefined") return DEFAULT_PREFERENCES;
-  try {
-    const raw = localStorage.getItem(PREFS_KEY);
-    if (!raw) return DEFAULT_PREFERENCES;
-    const parsed = JSON.parse(raw);
-    const result = UserPreferencesSchema.safeParse(parsed);
-    if (result.success) {
-      const { version: _v, ...prefs } = result.data;
-      return prefs;
-    }
-    return DEFAULT_PREFERENCES;
-  } catch {
-    return DEFAULT_PREFERENCES;
-  }
+  const data = readStorageItem(PREFS_KEY, UserPreferencesSchema, {
+    ...DEFAULT_PREFERENCES,
+    version: STORAGE_VERSION,
+  });
+  const { version: _v, ...prefs } = data;
+  return prefs;
 }
 
+/**
+ * Persists user preferences into localStorage.
+ *
+ * @param prefs UserPreferences object
+ */
 export function saveUserPreferences(prefs: UserPreferences): void {
-  if (typeof window === "undefined") return;
-  try {
-    const payload = { ...prefs, version: STORAGE_VERSION };
-    localStorage.setItem(PREFS_KEY, JSON.stringify(payload));
-  } catch {
-    // Graceful fallback
-  }
+  writeStorageItem(PREFS_KEY, { ...prefs, version: STORAGE_VERSION });
 }
 
+/**
+ * Loads logged sustainable actions from localStorage.
+ *
+ * @returns Array of TrackedActionItem
+ */
 export function loadTrackedActions(): TrackedActionItem[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(ACTIONS_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw);
-    const result = TrackedActionsListSchema.safeParse(parsed);
-    if (result.success) {
-      return result.data.items;
-    }
-    return [];
-  } catch {
-    return [];
-  }
+  const data = readStorageItem(ACTIONS_KEY, TrackedActionsListSchema, {
+    version: STORAGE_VERSION,
+    items: [],
+  });
+  return data.items;
 }
 
+/**
+ * Persists logged sustainable actions into localStorage.
+ *
+ * @param items List of TrackedActionItem
+ */
 export function saveTrackedActions(items: TrackedActionItem[]): void {
-  if (typeof window === "undefined") return;
-  try {
-    const payload = { version: STORAGE_VERSION, items };
-    localStorage.setItem(ACTIONS_KEY, JSON.stringify(payload));
-  } catch {
-    // Graceful fallback
-  }
+  writeStorageItem(ACTIONS_KEY, { version: STORAGE_VERSION, items });
 }
 
+/**
+ * Removes all AirAware keys from localStorage for privacy reset.
+ */
 export function clearAllSavedData(): void {
   if (typeof window === "undefined") return;
-  try {
+  tryCatch(() => {
     localStorage.removeItem(PROFILE_KEY);
     localStorage.removeItem(PREFS_KEY);
     localStorage.removeItem(ACTIONS_KEY);
-  } catch {
-    // Graceful fallback
-  }
+  });
 }

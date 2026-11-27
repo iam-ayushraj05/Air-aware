@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { ChatInterface } from "@/features/chat/ChatInterface";
@@ -17,7 +17,9 @@ export default function AdvisorPage() {
     const prof = loadUserProfile();
     setProfile(prof);
 
-    fetch(`/api/air-quality?lat=${prof.latitude}&lon=${prof.longitude}&name=${encodeURIComponent(prof.locationName)}`)
+    fetch(
+      `/api/air-quality?lat=${prof.latitude}&lon=${prof.longitude}&name=${encodeURIComponent(prof.locationName)}`
+    )
       .then((r) => r.json())
       .then((data) => {
         if (data.data) setAirData(data.data);
@@ -50,7 +52,8 @@ export default function AdvisorPage() {
               <span>AirAware AI Assistant</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              Personalized guidance on exercise safety, ventilation timing, vulnerable family members, and commute decisions.
+              Personalized guidance on exercise safety, ventilation timing, vulnerable family
+              members, and commute decisions.
             </p>
           </div>
 

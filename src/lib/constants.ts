@@ -15,7 +15,8 @@ export const US_AQI_CATEGORIES: Record<AQICategory, AQICategoryInfo> = {
     badgeText: "text-emerald-700 dark:text-emerald-300",
     borderClass: "border-emerald-200 dark:border-emerald-800",
     summary: "Air quality is satisfactory and poses little or no health risk.",
-    healthImplications: "Air quality is considered satisfactory, and air pollution poses little or no risk.",
+    healthImplications:
+      "Air quality is considered satisfactory, and air pollution poses little or no risk.",
   },
   moderate: {
     key: "moderate",
@@ -27,7 +28,8 @@ export const US_AQI_CATEGORIES: Record<AQICategory, AQICategoryInfo> = {
     badgeText: "text-amber-800 dark:text-amber-300",
     borderClass: "border-amber-200 dark:border-amber-800",
     summary: "Acceptable quality; very sensitive individuals may experience minor symptoms.",
-    healthImplications: "Air quality is acceptable; however, a very small number of individuals who are unusually sensitive to ozone or particulate matter may experience mild respiratory symptoms.",
+    healthImplications:
+      "Air quality is acceptable; however, a very small number of individuals who are unusually sensitive to ozone or particulate matter may experience mild respiratory symptoms.",
   },
   sensitive: {
     key: "sensitive",
@@ -38,8 +40,10 @@ export const US_AQI_CATEGORIES: Record<AQICategory, AQICategoryInfo> = {
     badgeBg: "bg-orange-50 dark:bg-orange-950/40",
     badgeText: "text-orange-800 dark:text-orange-300",
     borderClass: "border-orange-200 dark:border-orange-800",
-    summary: "Members of sensitive groups may experience health effects. General public less affected.",
-    healthImplications: "Children, older adults, and individuals with respiratory conditions (asthma) or heart disease are at greater risk of irritation and breathing difficulties.",
+    summary:
+      "Members of sensitive groups may experience health effects. General public less affected.",
+    healthImplications:
+      "Children, older adults, and individuals with respiratory conditions (asthma) or heart disease are at greater risk of irritation and breathing difficulties.",
   },
   unhealthy: {
     key: "unhealthy",
@@ -50,8 +54,10 @@ export const US_AQI_CATEGORIES: Record<AQICategory, AQICategoryInfo> = {
     badgeBg: "bg-rose-50 dark:bg-rose-950/40",
     badgeText: "text-rose-800 dark:text-rose-300",
     borderClass: "border-rose-200 dark:border-rose-800",
-    summary: "Everyone may begin to experience health effects; sensitive groups experience more serious effects.",
-    healthImplications: "Increased likelihood of respiratory symptoms in sensitive individuals, aggravation of heart or lung disease, and premature mortality in persons with cardiopulmonary disease.",
+    summary:
+      "Everyone may begin to experience health effects; sensitive groups experience more serious effects.",
+    healthImplications:
+      "Increased likelihood of respiratory symptoms in sensitive individuals, aggravation of heart or lung disease, and premature mortality in persons with cardiopulmonary disease.",
   },
   very_unhealthy: {
     key: "very_unhealthy",
@@ -63,7 +69,8 @@ export const US_AQI_CATEGORIES: Record<AQICategory, AQICategoryInfo> = {
     badgeText: "text-purple-800 dark:text-purple-300",
     borderClass: "border-purple-200 dark:border-purple-800",
     summary: "Health alert: The risk of health effects is increased for everyone.",
-    healthImplications: "Significant aggravation of heart or lung disease and premature mortality. Substantial increase in respiratory effects in general population.",
+    healthImplications:
+      "Significant aggravation of heart or lung disease and premature mortality. Substantial increase in respiratory effects in general population.",
   },
   hazardous: {
     key: "hazardous",
@@ -74,8 +81,10 @@ export const US_AQI_CATEGORIES: Record<AQICategory, AQICategoryInfo> = {
     badgeBg: "bg-red-100 dark:bg-red-950/60",
     badgeText: "text-red-950 dark:text-red-200",
     borderClass: "border-red-400 dark:border-red-800",
-    summary: "Health warning of emergency conditions: The entire population is likely to be affected.",
-    healthImplications: "Serious risk of respiratory distress and cardiovascular complications across entire population. Avoid all outdoor physical activity.",
+    summary:
+      "Health warning of emergency conditions: The entire population is likely to be affected.",
+    healthImplications:
+      "Serious risk of respiratory distress and cardiovascular complications across entire population. Avoid all outdoor physical activity.",
   },
 };
 
@@ -166,3 +175,26 @@ export const ALLOWED_API_HOSTS = [
  */
 export const MEDICAL_DISCLAIMER =
   "AirAware provides environmental information and general wellness guidance. It is not a medical device and does not replace professional medical advice. Follow local public-health guidance.";
+
+/**
+ * Default location fallback used when user has not configured GPS or saved preferences.
+ * Centered on urban metropolitan area with seasonal winter atmospheric inversions.
+ */
+export const DEFAULT_FALLBACK_LOCATION = {
+  name: "New Delhi",
+  latitude: 28.6139,
+  longitude: 77.209,
+  country: "India",
+} as const;
+
+/**
+ * Cache and network timeouts in seconds and milliseconds.
+ */
+export const NETWORK_CONFIG = {
+  AIR_QUALITY_CACHE_TTL_SECS: 1800, // 30 minutes
+  WEATHER_CACHE_TTL_SECS: 1800, // 30 minutes
+  GEOCODE_CACHE_TTL_SECS: 86400, // 24 hours
+  DEFAULT_TIMEOUT_MS: 6000,
+  MAX_RETRIES: 2,
+  EXPONENTIAL_BACKOFF_BASE_MS: 300,
+} as const;

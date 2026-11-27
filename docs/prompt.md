@@ -5,6 +5,7 @@ Build a complete, production-quality web application for the challenge:
 **Urban Air Quality Assistant**
 
 ### Problem Statement
+
 Create a GenAI-powered assistant that helps families and communities navigate severe winter smog and urban air pollution. The application should suggest low-emission daily routines, indoor air quality hacks, and sustainable alternatives tailored to their location and lifestyle, while clearly explaining the direct impact of their choices.
 
 This must be a fully functional application, not merely a UI prototype, landing page, static dashboard, or chatbot mockup.
@@ -62,6 +63,7 @@ Use a clean modular folder structure. Do not place the entire application in one
 Create a premium, modern environmental-tech dashboard.
 
 ### Visual identity
+
 - Deep forest green, emerald, soft mint
 - Off-white backgrounds
 - Slate gray text
@@ -69,6 +71,7 @@ Create a premium, modern environmental-tech dashboard.
 - Carefully controlled orange/red for pollution warnings
 
 ### Avoid
+
 - Generic AI purple gradients
 - Excessive glassmorphism or gradients
 - Emoji-heavy interfaces
@@ -78,6 +81,7 @@ Create a premium, modern environmental-tech dashboard.
 - Excessive animations
 
 ### Design characteristics
+
 - Beautiful typography
 - Spacious layout with consistent spacing
 - Rounded cards, subtle borders, soft shadows
@@ -94,6 +98,7 @@ The application should look like a premium climate-tech startup product.
 # 4. APPLICATION STRUCTURE
 
 ## A. Landing Page
+
 - AirAware logo and navigation
 - Hero section with an atmospheric illustration of a city transitioning from polluted air to cleaner air
 - Headline: "Know Your Air. Protect Your Family."
@@ -112,6 +117,7 @@ The landing page must have real navigation and functional buttons.
 ## B. Main Dashboard
 
 ### Dashboard header
+
 - Greeting based on the saved profile
 - Current location and date
 - Location search
@@ -119,9 +125,11 @@ The landing page must have real navigation and functional buttons.
 - Notification indicator
 
 ### Air Quality Overview
+
 Show: AQI value, AQI category, AQI color indicator, PM2.5, PM10, Ozone, NO2 (if available), last updated time, data source, and weather information when available.
 
 AQI categories:
+
 - 0–50: Good
 - 51–100: Moderate
 - 101–150: Unhealthy for Sensitive Groups
@@ -132,6 +140,7 @@ AQI categories:
 Make the category system configurable based on the selected data provider's standard. Clearly label which AQI standard is being used.
 
 ### Dashboard sections
+
 1. Current air quality
 2. Today's personalized health guidance
 3. Recommended actions
@@ -150,10 +159,13 @@ Create a deliberate dashboard hierarchy rather than equal-weight cards.
 # 5. LOCATION AND REAL-TIME DATA
 
 ### Location options
+
 Users must be able to: enter a city, search for a location, use browser geolocation after permission, change location manually, and save a preferred location.
 
 ### Data integrations
+
 Use public APIs that work without a key wherever possible:
+
 - Open-Meteo Air Quality API
 - Open-Meteo Weather API
 - Open-Meteo Geocoding API
@@ -171,6 +183,7 @@ NEVER fabricate real-time air-quality data. If the API is unavailable, display c
 Build the core feature: **"Your Personal Clean-Air Advisor"**
 
 The user completes a simple lifestyle profile:
+
 - Location
 - Family size
 - Children in household (optional)
@@ -190,6 +203,7 @@ Do not ask for unnecessary sensitive personal data.
 Recommendations must be based on: current AQI, pollutant levels, weather, location, household preferences, daily routine, outdoor activity, and commute habits.
 
 ### AI response must contain
+
 1. Today's air-quality summary
 2. What the AQI means in simple language
 3. Specific actions for today
@@ -215,6 +229,7 @@ All recommendations must be grounded in available data.
 Create a functional conversational interface named **AirAware AI**.
 
 Example questions:
+
 - Is it safe to go jogging today?
 - What should my family do during severe smog?
 - How can I reduce indoor PM2.5?
@@ -226,6 +241,7 @@ Example questions:
 - How can I make my home healthier?
 
 ### Chat functionality
+
 Chat interface, message history, loading indicator, typing state, suggested questions, context-aware responses, current AQI context, user lifestyle context, and a clear-conversation option.
 
 Use a real LLM integration if an API key is configured. Support environment variables `AI_PROVIDER`, `AI_API_KEY`, `AI_MODEL`. Do not expose API keys to the browser.
@@ -237,15 +253,19 @@ If no API key exists, provide a useful deterministic fallback recommendation eng
 # 8. SMART DAILY ROUTINE PLANNER: "Build My Clean-Air Day"
 
 ### Morning
+
 Check air quality; recommended outdoor activity timing; ventilation advice; commute recommendation; breakfast/cooking considerations.
 
 ### Afternoon
+
 Indoor activities; work/study suggestions; outdoor exposure recommendations; hydration reminders.
 
 ### Evening
+
 Exercise guidance based on air quality; commute recommendations; indoor ventilation advice; exposure reduction.
 
 ### Night
+
 Bedroom environment suggestions; indoor air quality habits; tomorrow preparation.
 
 Users must be able to: generate a new routine, customize it, mark actions completed, see progress, save routines, and regenerate based on changing air quality.
@@ -257,6 +277,7 @@ Do not make unsafe medical claims.
 # 9. INDOOR AIR QUALITY LAB: "Make Your Home a Cleaner-Air Zone"
 
 Categories:
+
 - **Cooking:** ventilation, smoke reduction, cooking habits, avoiding unnecessary indoor combustion
 - **Ventilation:** when to ventilate and when to keep windows closed, using weather and pollution context where available
 - **Dust:** cleaning strategies, reducing accumulation, proper cleaning practices
@@ -271,6 +292,7 @@ Create: an indoor checklist, an interactive room assessment, room-based tips, an
 # 10. SUSTAINABLE ALTERNATIVES: "Small Changes. Cleaner Cities."
 
 Interactive comparisons, for example:
+
 - Private vehicle vs public transportation
 - Car vs walking/cycling for suitable short trips
 - Single-use vs reusable products
@@ -377,14 +399,17 @@ Reusable components include: AQICard, PollutantCard, LocationSelector, Recommend
 Use Vitest, React Testing Library, and Playwright.
 
 ### Unit tests
+
 - AQI calculations: good, moderate, unhealthy categories, hazardous
 - Recommendation logic: low AQI, high AQI, missing data, sensitive household context
 - Input validation: invalid location, missing values, invalid API input
 
 ### UI tests
+
 Dashboard renders, navigation works, location search works, AI chat fallback works, routine generation works, checklist interaction works, impact tracker persists, accessibility controls work.
 
 ### End-to-end flows
+
 1. User opens the application
 2. Searches for a city
 3. Views AQI
@@ -446,12 +471,14 @@ Include: project name, problem statement, solution, features, architecture, tech
 The project is NOT complete until every gate below passes and is proven with real command output. Do not claim a gate passed without running it.
 
 ## Execution protocol
+
 1. Work in phases: (1) architecture + design system, (2) data/API layer + validation, (3) AI engine + fallback, (4) pages, (5) accessibility pass, (6) security pass, (7) performance pass, (8) tests, (9) docs, (10) final verification.
 2. After each phase run `npm run typecheck && npm run lint` and fix everything before continuing.
 3. Do not stop early. If a gate fails, fix it and re-run until it passes.
 4. At the end, create `VERIFICATION.md` containing a scorecard with the actual command outputs and numbers for every gate below.
 
 ## CODE QUALITY gates
+
 - `tsconfig`: `strict`, `noUncheckedIndexedAccess`, `noImplicitOverride`, `exactOptionalPropertyTypes`. Zero `any`, zero `@ts-ignore`.
 - ESLint (next/core-web-vitals, typescript-eslint strict, jsx-a11y, import ordering) with **zero warnings**. Configure Prettier. Add `lint-staged` and `husky`.
 - Layered architecture: `src/features/<feature>/{components,hooks,lib,types}`, `src/lib` (pure domain logic, no React), `src/server` (API clients, rate limiter, AI providers), `src/components/ui` (design system).
@@ -463,6 +490,7 @@ The project is NOT complete until every gate below passes and is proven with rea
 - Add concise JSDoc on every exported function, and an `ARCHITECTURE.md` with a diagram and short ADRs (why Next App Router, why Open-Meteo, why a deterministic fallback).
 
 ## SECURITY gates
+
 - Set security headers in `next.config` / middleware: strict nonce-based CSP (no `unsafe-eval`), `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` (geolocation for self only), `frame-ancestors`/`X-Frame-Options`, HSTS.
 - Every API route: allowed-method check, request body size limit, Zod validation (`.strict()`), timeout via `AbortController`, normalized error responses with no stack traces, correct status codes (400/405/413/429/502/504).
 - In-memory sliding-window rate limiter keyed by IP with a `Retry-After` header, applied to chat, geocode, and air-quality routes. Document that production would use Redis/Upstash.
@@ -474,6 +502,7 @@ The project is NOT complete until every gate below passes and is proven with rea
 - Write `SECURITY.md` with a short threat model (assets, threats, mitigations) and a privacy statement.
 
 ## EFFICIENCY gates
+
 - Lighthouse (mobile, production build): Performance ≥ 95, Accessibility = 100, Best Practices ≥ 95, SEO ≥ 95. Add a `lighthouse` script and record scores in `VERIFICATION.md`.
 - Budgets: initial JS ≤ 150 KB gzipped on the landing page; LCP < 2.5s, CLS < 0.1, INP < 200ms on throttled 4G. Run `@next/bundle-analyzer` and report results.
 - Dynamically import Recharts and other heavy components with skeleton fallbacks (`next/dynamic`). Use `next/font` with `display: swap` and `next/image` with proper `sizes`.
@@ -482,6 +511,7 @@ The project is NOT complete until every gate below passes and is proven with rea
 - Stream AI chat responses where the provider supports it. Memoize expensive derived values; split contexts to avoid context-wide rerenders.
 
 ## TESTING gates
+
 - Vitest coverage thresholds enforced in config: **≥ 85% lines/functions/statements and ≥ 80% branches** for `src/lib` and `src/server`; ≥ 70% overall.
 - Boundary-value tests for AQI at 0, 50, 51, 100, 101, 150, 151, 200, 201, 300, 301, negative, NaN, null, undefined. Use property-based tests (`fast-check`) to verify every integer 0–500 maps to exactly one category and that categories are monotonic.
 - Recommendation engine: behavior-based tests (no snapshots) for each AQI band × (child / elderly / none) × (purifier / none) × (missing pollutant data) × (high wind / low wind) × (outdoor-active / sedentary).
@@ -493,6 +523,7 @@ The project is NOT complete until every gate below passes and is proven with rea
 - Scripts: `test`, `test:watch`, `test:coverage`, `test:e2e`, `test:a11y`, `typecheck`, `lint`, `build`, and `verify` (runs everything in order). Add a GitHub Actions workflow that runs `verify`.
 
 ## ACCESSIBILITY gates (WCAG 2.2 AA, AAA where cheap)
+
 - Skip-to-content link; landmarks (`header`, `nav`, `main`, `footer`, `aside`); one `h1` per page; no skipped heading levels; `lang` attribute; unique page title per route; focus moved to `h1` on route change.
 - Text contrast ≥ 4.5:1 (≥ 3:1 for large text and UI components). Document checked color pairs in a `design-tokens` file. Ship a true high-contrast theme (≥ 7:1).
 - Focus indicator ≥ 3:1 contrast, at least 2px, never obscured by sticky headers or bars (WCAG 2.4.11). Target size ≥ 44×44px (never below 24×24, WCAG 2.5.8).
@@ -505,6 +536,7 @@ The project is NOT complete until every gate below passes and is proven with rea
 - Write `ACCESSIBILITY.md` with a conformance table (each WCAG 2.2 AA criterion → how it is met → how it is tested) plus a manual screen-reader checklist (NVDA/VoiceOver).
 
 ## PROBLEM STATEMENT ALIGNMENT gates
+
 - Create `docs/REQUIREMENTS_TRACEABILITY.md`: a table mapping each problem-statement requirement (location-tailored, low-emission routines, indoor hacks, sustainable alternatives, explained impact, winter smog, families/communities) → feature, file path, and the test that proves it.
 - Every recommendation object carries `{ action, reason, evidence, expectedBenefit, confidence, isGeneral }` (`evidence` is the data point that triggered it, e.g. "PM2.5 = 78 µg/m³"), and the UI renders all of them.
 - Include a **Winter smog mode** that activates when AQI is elevated, wind is low, and temperature is low. It triggers inversion/low-wind explanations and community-level advice (reduce idling, avoid open burning, carpool). Be region-aware without making unsupported claims.
@@ -513,6 +545,7 @@ The project is NOT complete until every gate below passes and is proven with rea
 - The first-time user flow must reach a useful, personalized result in **under 60 seconds and 3 interactions**, with or without a completed profile.
 
 ## Final documents
+
 `VERIFICATION.md` (scorecard with real outputs), `ARCHITECTURE.md`, `SECURITY.md`, `ACCESSIBILITY.md`, `docs/REQUIREMENTS_TRACEABILITY.md`, `.env.example`, `README.md`, CI workflow, and a seeded Demo Mode. Before finishing, run `npm run verify` and paste the summary. If any gate is below target, fix it. Do not report completion with known failing gates.
 
 ---

@@ -1,7 +1,7 @@
 # AirAware: Breathe Smarter, Live Safer
 
 > **Prompt Wars Challenge 6: Urban Air Quality Assistant**  
-> *"Your personal guide to cleaner air, healthier routines, and smarter daily decisions."*
+> _"Your personal guide to cleaner air, healthier routines, and smarter daily decisions."_
 
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.2+-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript 5.7](https://img.shields.io/badge/TypeScript-5.7-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
@@ -16,14 +16,18 @@ AirAware is a production-grade, GenAI-powered environmental health platform desi
 ## 1. Product Vision & Problem Statement
 
 ### The Urban Air Crisis
+
 Rapid urbanization combined with seasonal winter meteorological stagnation (thermal inversions, calm winds) traps high concentrations of fine particulate matter ($\text{PM}_{2.5}$, $\text{PM}_{10}$) and toxic combustion gases ($\text{NO}_2$, $\text{O}_3$) at street level. Families struggle with:
+
 - **Decision Paralysis:** Deciding whether it is safe for children to play outdoors or for seniors to go for walks.
 - **Indoor Blindspots:** Unknowingly compounding toxic exposure indoors through high-heat frying, incense, or unsealed window frames.
 - **Confusing Indexes:** Navigating raw AQI numbers without actionable, grounded health guidance.
 - **Disconnected Sustainability:** Wanting to help curb emissions but not knowing which micro-habits measurably reduce neighborhood particulate loads.
 
 ### The AirAware Solution
+
 AirAware translates live atmospheric data into structured, evidence-grounded action plans:
+
 1. **Real-time Urban Intelligence:** Street-level $\text{PM}_{2.5}$, $\text{PM}_{10}$, $\text{NO}_2$, ozone, and winter thermal inversion detection.
 2. **Personalized Clean-Air Advisor:** Context-aware GenAI assistant with structured evidence citing EPA, WHO, and peer-reviewed research.
 3. **Smart Daily Routine Planner ("Build My Clean-Air Day"):** 4-part diurnal schedule (Morning, Afternoon, Evening, Night) timed around rush hour pollution peaks.
@@ -83,13 +87,14 @@ AirAware translates live atmospheric data into structured, evidence-grounded act
 
 AirAware integrates with high-reliability, open atmospheric data services without requiring paid external API keys:
 
-| Service | Endpoint | Description |
-|---|---|---|
+| Service                        | Endpoint                                                | Description                                                                                        |
+| ------------------------------ | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | **Open-Meteo Air Quality API** | `https://air-quality-api.open-meteo.com/v1/air-quality` | Hourly $\text{PM}_{2.5}$, $\text{PM}_{10}$, $\text{NO}_2$, $\text{O}_3$, European AQI, and US AQI. |
-| **Open-Meteo Weather API** | `https://api.open-meteo.com/v1/forecast` | Ambient temperature, relative humidity, wind speed, wind direction, and weather condition codes. |
-| **Open-Meteo Geocoding API** | `https://geocoding-api.open-meteo.com/v1/search` | Fast global geographic location lookup with latitude, longitude, and country codes. |
+| **Open-Meteo Weather API**     | `https://api.open-meteo.com/v1/forecast`                | Ambient temperature, relative humidity, wind speed, wind direction, and weather condition codes.   |
+| **Open-Meteo Geocoding API**   | `https://geocoding-api.open-meteo.com/v1/search`        | Fast global geographic location lookup with latitude, longitude, and country codes.                |
 
 ### Server-Side Data Flow & Security
+
 - **Strict SSRF Domain Allowlist:** All outbound queries are verified server-side against trusted Open-Meteo origins.
 - **Sliding-Window Rate Limiting:** In-memory sliding window rate limiter protects endpoints against denial of service, returning HTTP 429 with standard `Retry-After` headers.
 - **Coordinate Privacy:** GPS coordinates from browser geolocation are truncated to 2 decimal places ($\sim 1.1\text{ km}$ resolution) before network transfer or storage.
@@ -101,15 +106,17 @@ AirAware integrates with high-reliability, open atmospheric data services withou
 AirAware adheres to strict environmental data transparency principles:
 
 ### Status Badges
+
 - **🟢 LIVE DATA:** Retrieved in real-time directly from Open-Meteo atmospheric observation feeds.
 - **🔵 CACHED DATA:** Stored within the local sliding window (< 30 minutes old) to preserve bandwidth.
 - **🟡 DEMO DATA (SIMULATED):** Clearly tagged when network requests fail or offline mode is triggered. **Demo data is never presented as real air quality.**
 
 ### Standards & Calibration
+
 - **AQI Calculation:** US AQI via Open-Meteo, mapped to EPA categories (0–50 Good, 51–100 Moderate, 101–150 Unhealthy for Sensitive Groups, 151–200 Unhealthy, 201–300 Very Unhealthy, 301+ Hazardous).
 - **Inhalation Reduction Formula:** Evaluates indoor-outdoor ratio ($I/O$), certified True HEPA single-pass efficiency ($99.97\%$ for $\ge 0.3\,\mu\text{m}$ particles), and N95/FFP2 respirator fit factors ($90\text{--}95\%$ field effectiveness under normal fit). Modeled using peer-reviewed indoor filtration dynamics:
   $$\text{Effective Reduction} = 1 - \left[(1 - E_{\text{mask}}) \cdot \frac{t_{\text{outdoor}}}{24} + (I/O)_{\text{filtered}} \cdot \frac{t_{\text{indoor}}}{24}\right]$$
-  *(Citations: US EPA Indoor Air Quality Guidelines; Cummings & Waring, Atmospheric Environment).*
+  _(Citations: US EPA Indoor Air Quality Guidelines; Cummings & Waring, Atmospheric Environment)._
 - **Emissions Factors:** Carbon dioxide equivalent ($\text{CO}_2\text{e}$) and particulate matter savings are calculated using official UK DEFRA Greenhouse Gas Reporting Factors and US EPA AP-42 combustion emission inventories.
 
 ---
@@ -125,10 +132,12 @@ AirAware adheres to strict environmental data transparency principles:
 ## 7. Clone & Local Development
 
 ### Prerequisites
+
 - Node.js 18.18+ or 20.x
 - npm 9+
 
 ### Setup Instructions
+
 ```bash
 # 1. Clone the repository
 git clone https://github.com/iam-ayushraj05/Air-aware.git
@@ -153,6 +162,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 AirAware is optimized for zero-configuration, production deployment on **Vercel**.
 
 ### Option A: Deploy via Vercel CLI
+
 ```bash
 # Install Vercel CLI globally
 npm install -g vercel
@@ -162,6 +172,7 @@ vercel
 ```
 
 ### Option B: Deploy via Vercel Dashboard (Git Integration)
+
 1. Push your repository to GitHub: `https://github.com/iam-ayushraj05/Air-aware.git`.
 2. Navigate to [vercel.com/new](https://vercel.com/new) and import the repository.
 3. Configure Project Settings:
@@ -181,17 +192,20 @@ vercel
 ## 9. Verification & Quality Gates
 
 Run all automated quality gates with a single command:
+
 ```bash
 npm run verify
 ```
 
 This runs:
+
 1. `npm run typecheck`: Strict TypeScript typecheck across all components, hooks, and API routes.
 2. `npm run lint`: ESLint check with zero errors and zero warnings.
 3. `npm run test`: Vitest test suite executing unit tests, property tests, and automated accessibility (a11y) checks.
 4. `npm run build`: Production Next.js build with static route generation and dynamic route validation.
 
 For End-to-End browser tests:
+
 ```bash
 npm run test:e2e
 ```

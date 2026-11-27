@@ -1,4 +1,3 @@
-import React from "react";
 import { DataSourceOrigin } from "@/lib/types";
 import { Activity, Database, AlertTriangle } from "lucide-react";
 import { clsx } from "clsx";
@@ -27,7 +26,11 @@ export function DataSourceBadge({ origin, updatedAt, className }: DataSourceBadg
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
         <Activity className="w-3.5 h-3.5" aria-hidden="true" />
         <span>LIVE DATA</span>
-        {formattedTime && <span className="text-emerald-950 dark:text-emerald-200 font-medium">({formattedTime})</span>}
+        {formattedTime && (
+          <span className="text-emerald-950 dark:text-emerald-200 font-medium">
+            ({formattedTime})
+          </span>
+        )}
       </div>
     );
   }
@@ -44,7 +47,9 @@ export function DataSourceBadge({ origin, updatedAt, className }: DataSourceBadg
       >
         <Database className="w-3.5 h-3.5" aria-hidden="true" />
         <span>CACHED DATA</span>
-        {formattedTime && <span className="text-blue-950 dark:text-blue-200 font-medium">({formattedTime})</span>}
+        {formattedTime && (
+          <span className="text-blue-950 dark:text-blue-200 font-medium">({formattedTime})</span>
+        )}
       </div>
     );
   }

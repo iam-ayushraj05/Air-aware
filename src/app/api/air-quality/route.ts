@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getLiveAirQuality } from "@/server/api-client";
 import { checkRateLimit } from "@/server/rate-limiter";
+import { logger } from "@/lib/logger";
 
 const AirQualityQuerySchema = z
   .object({
@@ -37,7 +38,10 @@ export async function GET(request: NextRequest) {
 
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Invalid query parameters: latitude (-90 to 90) and longitude (-180 to 180) are required." },
+      {
+        error:
+          "Invalid query parameters: latitude (-90 to 90) and longitude (-180 to 180) are required.",
+      },
       { status: 400 }
     );
   }
@@ -56,7 +60,7 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (err: unknown) {
-    console.error("Air quality route error:", err instanceof Error ? err.message : "Unknown error");
+    logger.error("Air quality route error:", err instanceof Error ? err.message : "Unknown error");
     return NextResponse.json(
       { error: "Failed to retrieve air quality data. Please try again." },
       { status: 502 }

@@ -1,4 +1,3 @@
-import React from "react";
 import { PollutantDetail } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -71,15 +70,17 @@ export function PollutantGrid({ pollutants }: PollutantGridProps) {
                       data.status === "good"
                         ? "bg-emerald-500"
                         : data.status === "moderate"
-                        ? "bg-amber-500"
-                        : "bg-rose-500"
+                          ? "bg-amber-500"
+                          : "bg-rose-500"
                     )}
                     style={{ width: `${percent}%` }}
                   />
                 </div>
                 <div className="flex justify-between text-[10px] text-slate-500">
                   <span>0</span>
-                  <span>Safe limit: {data.safeLimit} {data.unit}</span>
+                  <span>
+                    Safe limit: {data.safeLimit} {data.unit}
+                  </span>
                 </div>
               </div>
             </div>

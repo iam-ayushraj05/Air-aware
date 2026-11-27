@@ -3,14 +3,15 @@ import { z } from "zod";
 import { getAiAdvisorResponse } from "@/server/ai-provider";
 import { checkRateLimit } from "@/server/rate-limiter";
 import { AirQualitySnapshot, UserLifestyleProfile } from "@/lib/types";
+import { logger } from "@/lib/logger";
 
 const MAX_BODY_BYTES = 50 * 1024; // 50 KB
 
 const ChatPayloadSchema = z
   .object({
     message: z.string().max(1000).optional(),
-    airQuality: z.any(), // Will be safely accessed or fallback
-    profile: z.any().optional(),
+    airQuality: z.record(z.string(), z.unknown()).optional(),
+    profile: z.record(z.string(), z.unknown()).optional(),
   })
   .strict();
 
@@ -46,31 +47,43 @@ export async function POST(request: NextRequest) {
 
   const parsed = ChatPayloadSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json(
-      { error: "Invalid chat payload parameters." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Invalid chat payload parameters." }, { status: 400 });
   }
 
   try {
     const { message, airQuality, profile } = parsed.data;
 
     // Safety fallback if airQuality snapshot is missing or malformed
-    const safeAQ: AirQualitySnapshot = airQuality && airQuality.aqi ? airQuality : {
-      aqi: 120,
-      category: "sensitive",
-      standard: "US_AQI",
-      pollutants: {
-        pm2_5: { value: 43, unit: "µg/m³", label: "PM2.5", safeLimit: 15, status: "moderate" },
-        pm10: { value: 75, unit: "µg/m³", label: "PM10", safeLimit: 45, status: "moderate" },
-      },
-      weather: { temperature: 18, humidity: 55, windSpeed: 8, weatherCode: 1, conditionText: "Mild" },
-      hourly: [],
-      location: { name: "Current City", latitude: 0, longitude: 0 },
-      dataSource: "demo",
-      updatedAt: new Date().toISOString(),
-      isWinterSmogActive: false,
-    };
+    const safeAQ: AirQualitySnapshot =
+      airQuality && typeof airQuality["aqi"] === "number"
+        ? (airQuality as unknown as AirQualitySnapshot)
+        : {
+            aqi: 120,
+            category: "sensitive",
+            standard: "US_AQI",
+            pollutants: {
+              pm2_5: {
+                value: 43,
+                unit: "µg/m³",
+                label: "PM2.5",
+                safeLimit: 15,
+                status: "moderate",
+              },
+              pm10: { value: 75, unit: "µg/m³", label: "PM10", safeLimit: 45, status: "moderate" },
+            },
+            weather: {
+              temperature: 18,
+              humidity: 55,
+              windSpeed: 8,
+              weatherCode: 1,
+              conditionText: "Mild",
+            },
+            hourly: [],
+            location: { name: "Current City", latitude: 0, longitude: 0 },
+            dataSource: "demo",
+            updatedAt: new Date().toISOString(),
+            isWinterSmogActive: false,
+          };
 
     const response = await getAiAdvisorResponse({
       userQuestion: message,
@@ -80,11 +93,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data: response });
   } catch (err: unknown) {
-    console.error("AI Chat route error:", err instanceof Error ? err.message : "Unknown error");
-    return NextResponse.json(
-      { error: "AI Assistant temporarily unavailable." },
-      { status: 502 }
-    );
+    logger.error("AI Chat route error:", err instanceof Error ? err.message : "Unknown error");
+    return NextResponse.json({ error: "AI Assistant temporarily unavailable." }, { status: 502 });
   }
 }
 

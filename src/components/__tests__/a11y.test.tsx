@@ -1,4 +1,3 @@
-import React from "react";
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { axe } from "vitest-axe";
@@ -34,7 +33,9 @@ describe("Accessibility Verification with vitest-axe", () => {
   });
 
   it("DataSourceBadge has zero accessibility violations", async () => {
-    const { container } = render(<DataSourceBadge origin="live" updatedAt="2026-11-26T10:00:00Z" />);
+    const { container } = render(
+      <DataSourceBadge origin="live" updatedAt="2026-11-26T10:00:00Z" />
+    );
     const results = await axe(container);
     expect(results.violations).toEqual([]);
   });

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { ImpactMetrics } from "@/features/impact/ImpactMetrics";
@@ -37,7 +37,8 @@ export default function ImpactPage() {
               <span>My Clean-Air Impact</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              Track your daily choices and their transparently calculated reductions in carbon emissions and ambient PM2.5.
+              Track your daily choices and their transparently calculated reductions in carbon
+              emissions and ambient PM2.5.
             </p>
           </div>
 
@@ -69,7 +70,10 @@ export default function ImpactPage() {
                       <strong className="block text-slate-900 dark:text-white">{act.title}</strong>
                       <span className="text-slate-500 text-[11px]">
                         {new Date(act.timestamp).toLocaleDateString()} at{" "}
-                        {new Date(act.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {new Date(act.timestamp).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </span>
                     </div>
 

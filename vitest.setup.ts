@@ -23,7 +23,10 @@ Object.defineProperty(window, "matchMedia", {
 class MockNotification {
   static permission: NotificationPermission = "default";
   static requestPermission = async (): Promise<NotificationPermission> => "granted";
-  constructor(public title: string, public options?: NotificationOptions) {}
+  constructor(
+    public title: string,
+    public options?: NotificationOptions
+  ) {}
 }
 // @ts-expect-error mock notification
 global.Notification = MockNotification;

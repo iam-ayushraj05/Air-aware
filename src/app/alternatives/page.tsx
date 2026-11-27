@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { ComparisonCard } from "@/features/sustainability/ComparisonCard";
@@ -53,7 +53,8 @@ export default function AlternativesPage() {
               <span>Small Changes. Cleaner Cities.</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              Interactive comparisons of daily habits with calculated ranges of avoided greenhouse gases and particulate matter.
+              Interactive comparisons of daily habits with calculated ranges of avoided greenhouse
+              gases and particulate matter.
             </p>
           </div>
 

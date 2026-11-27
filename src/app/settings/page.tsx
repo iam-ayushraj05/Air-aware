@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { ProfileSettingsForm } from "@/features/profile/ProfileSettingsForm";
@@ -31,7 +31,8 @@ export default function SettingsPage() {
               <span>Settings & Household Profile</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              Manage your location preferences, vulnerability flags, accessibility contrast, and local storage state.
+              Manage your location preferences, vulnerability flags, accessibility contrast, and
+              local storage state.
             </p>
           </div>
 

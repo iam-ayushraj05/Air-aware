@@ -1,16 +1,10 @@
-import React from "react";
 import { clsx } from "clsx";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "elevated" | "bordered";
 }
 
-export function Card({
-  children,
-  className,
-  variant = "default",
-  ...props
-}: CardProps) {
+export function Card({ children, className, variant = "default", ...props }: CardProps) {
   const variantStyles = {
     default: "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm",
     elevated: "bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-md",
@@ -33,7 +27,13 @@ export function CardHeader({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={clsx("flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-4", className)} {...props}>
+    <div
+      className={clsx(
+        "flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-4",
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -45,7 +45,10 @@ export function CardTitle({
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h3 className={clsx("text-lg font-semibold text-slate-900 dark:text-slate-100", className)} {...props}>
+    <h3
+      className={clsx("text-lg font-semibold text-slate-900 dark:text-slate-100", className)}
+      {...props}
+    >
       {children}
     </h3>
   );

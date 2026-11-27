@@ -1,4 +1,3 @@
-import React from "react";
 import { WeatherCondition } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { Wind, Thermometer, Droplets, CloudSun, AlertCircle } from "lucide-react";
@@ -51,7 +50,9 @@ export function WeatherCard({ weather }: WeatherCardProps) {
         <div className="mt-3.5 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-xs flex items-start gap-2">
           <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
           <p className="text-amber-900 dark:text-amber-200 leading-relaxed">
-            <strong>Thermal Inversion Flag:</strong> Surface air is cold ({weather.temperature}°C) with low wind velocity ({weather.windSpeed} km/h), creating atmospheric trapping of particulate emissions.
+            <strong>Thermal Inversion Flag:</strong> Surface air is cold ({weather.temperature}°C)
+            with low wind velocity ({weather.windSpeed} km/h), creating atmospheric trapping of
+            particulate emissions.
           </p>
         </div>
       )}
